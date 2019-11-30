@@ -27,17 +27,13 @@
         /// </summary>
         public GameObject GameObjectPrefab;
 
-        /// <summary>
-        /// Gesutre canvas.
-        /// </summary>
-        public GameObject GestureCanvas;
+        public GameObject DrawButton;
 
         /// <summary>
         /// True if the app is in the process of quitting due to an ARCore connection error,
         /// otherwise false.
         /// </summary>
         private bool m_IsQuitting = false;
-
         private bool isInstantiated = false;
 
         /// <summary>
@@ -77,58 +73,44 @@
 
             if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
             {
-                // Use hit pose and camera pose to check if hittest is from the
-                // back of the plane, if it is, no need to create the anchor.
-                if ((hit.Trackable is DetectedPlane) &&
-                    Vector3.Dot(FirstPersonCamera.transform.position - hit.Pose.position,
-                        hit.Pose.rotation * Vector3.up) < 0)
+                if (hit.Trackable is DetectedPlane)
                 {
-                    Debug.Log("Hit at back of the current DetectedPlane");
-                }
-                else
-                {
-                    if (isInstantiated)
+                    DetectedPlane detectedPlane = hit.Trackable as DetectedPlane;
+                    if (detectedPlane.PlaneType == DetectedPlaneType.HorizontalUpwardFacing)
                     {
-                        Debug.Log("Scene instantiated");
-                    }
-                    else
-                    {
-                        // Instantiate prefab at the hit pose.
-                        var gameObject = Instantiate(GameObjectPrefab, hit.Pose.position, hit.Pose.rotation);
+                        if (isInstantiated)
+                        {
+                            Debug.Log("Scene instantiated");
+                        }
+                        else
+                        {
+                            // Instantiate prefab at the hit pose.
+                            var gameObject = Instantiate(GameObjectPrefab, hit.Pose.position, hit.Pose.rotation);
 
-                        // Create an anchor to allow ARCore to track the hitpoint as understanding of
-                        // the physical world evolves.
-                        var anchor = hit.Trackable.CreateAnchor(hit.Pose);
+                            // Create an anchor to allow ARCore to track the hitpoint as understanding of
+                            // the physical world evolves.
+                            var anchor = hit.Trackable.CreateAnchor(hit.Pose);
 
-                        // Make game object a child of the anchor.
-                        gameObject.transform.parent = anchor.transform;
-
-                        isInstantiated = true;
+                            // Make game object a child of the anchor.
+                            gameObject.transform.parent = anchor.transform;
+                            isInstantiated = true;
+                        }
                     }
                 }
             }
-
-            if(SceneIsRendered())
-            {
-                GestureCanvas.SetActive(true);
-            }
-            else 
-            {
-                GestureCanvas.SetActive(false);
-            }
+            
         }
 
         /// <summary>
         /// Check if the play scene is rendered
         /// </summary>
-        private bool SceneIsRendered()
+        private bool IsTracking()
         {
-            if (GameObjectPrefab.GetComponent<Renderer>().isVisible)
+            if (Session.Status != SessionStatus.Tracking)
             {
-                Debug.Log("Play scene is visible");
-                return true;
+                return false;
             }
-            return false;
+            return true;
         }
 
         /// <summary>
