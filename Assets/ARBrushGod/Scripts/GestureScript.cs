@@ -2,85 +2,133 @@
 using System.Collections.Generic;
 using PDollarGestureRecognizer;
 using QDollarGestureRecognizer;
+using BrushGestures;
+using UnityEngine.UI;
 
-public class GestureScript : MonoBehaviour
+namespace BrushGestures
 {
-    public Transform gestureOnScreenPrefab;
-    private List<Gesture> trainingSet = new List<Gesture>();
-    private List<Point> points = new List<Point>();
-    private int strokeId = -1;
-    private Vector3 virtualKeyPosition = Vector2.zero;
-    private int vertexCount = -1;
-    private List<LineRenderer> gestureLinesRenderer = new List<LineRenderer>();
-    private LineRenderer currentGestureLineRenderer;
-    private bool recognized;
-
-    // Start is called before the first frame update
-    void Start()
+    public class GestureScript : MonoBehaviour
     {
-        //Load pre-made gestures
-        TextAsset[] gesturesXml = Resources.LoadAll<TextAsset>("GestureSet/");
-        foreach (TextAsset gestureXml in gesturesXml)
-            trainingSet.Add(GestureIO.ReadGestureFromXML(gestureXml.text));
-    }
+        public Transform gestureOnScreenPrefab;
+        public GameObject GestureCanvas;
+        public GameObject DrawButton;
+        private List<Gesture> trainingSet = new List<Gesture>();
+        private List<Point> points = new List<Point>();
+        private int strokeId = -1;
+        private Vector3 virtualKeyPosition = Vector2.zero;
+        private int vertexCount = -1;
+        private List<LineRenderer> gestureLinesRenderer = new List<LineRenderer>();
+        private LineRenderer currentGestureLineRenderer;
+        private bool recognized;
+        private bool isAllowedToDraw = false;
+        BrushPowers brushPowers;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.touchCount > 0 || Input.GetMouseButton(0))
+        // Start is called before the first frame update
+        void Start()
         {
-            virtualKeyPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
+            //Load pre-made gestures
+            TextAsset[] gesturesXml = Resources.LoadAll<TextAsset>("GestureSet/");
+            foreach (TextAsset gestureXml in gesturesXml)
+                trainingSet.Add(GestureIO.ReadGestureFromXML(gestureXml.text));
         }
 
-        if (Input.GetMouseButtonDown(0))
+        // Update is called once per frame
+        void Update()
         {
-            if (recognized)
+            if (isAllowedToDraw)
             {
+                //Debug.Log("Drawing: " + isAllowedToDraw);
+                RenderLines();
+            }
+        }
 
-                recognized = false;
-                strokeId = -1;
+        public void OnDrawButtonClick()
+        {
+            if (!isAllowedToDraw)
+            {
+                DrawButton.GetComponentInChildren<Text>().text = "Done";
+                isAllowedToDraw = true;
+                Debug.Log("Drawing");
+            }
+            else
+            {
+                OnRecognizeButtonClick();
+                isAllowedToDraw = false;
+                DrawButton.GetComponentInChildren<Text>().text = "Draw";
+                Debug.Log("Done");
+            }
+        }
 
-                points.Clear();
-
-                foreach (LineRenderer lineRenderer in gestureLinesRenderer)
+        public void OnRecognizeButtonClick()
+        {
+            string gestureResult;
+            try
+            {
+                recognized = true;
+                foreach (var point in points.ToArray())
                 {
-
-                    lineRenderer.positionCount = 0;
-                    Destroy(lineRenderer.gameObject);
+                    Debug.Log("X:" + point.X + " " + "Y:" + point.Y + " " + "strokeID: " + point.StrokeID);
                 }
 
-                gestureLinesRenderer.Clear();
+                //Recognize drawing
+                Gesture candidate = new Gesture(points.ToArray());
+                gestureResult = QPointCloudRecognizer.Classify(candidate, trainingSet.ToArray());
+            }
+            catch
+            {
+                gestureResult = "none";
+            }
+            //Activate power visualizer
+            brushPowers = GestureCanvas.GetComponent<BrushPowers>();
+            brushPowers.InvokePower(gestureResult);
+            Debug.Log(gestureResult);
+        }
+
+        private void RenderLines()
+        {
+            if (Input.touchCount > 0 || Input.GetMouseButton(0))
+            {
+                virtualKeyPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
             }
 
-            ++strokeId;
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (recognized)
+                {
 
-            Transform tmpGesture = Instantiate(gestureOnScreenPrefab, transform.position, transform.rotation) as Transform;
-            currentGestureLineRenderer = tmpGesture.GetComponent<LineRenderer>();
+                    recognized = false;
+                    strokeId = -1;
 
-            gestureLinesRenderer.Add(currentGestureLineRenderer);
+                    points.Clear();
 
-            vertexCount = 0;
-            Debug.Log(strokeId);
+                    foreach (LineRenderer lineRenderer in gestureLinesRenderer)
+                    {
+
+                        lineRenderer.positionCount = 0;
+                        Destroy(lineRenderer.gameObject);
+                    }
+
+                    gestureLinesRenderer.Clear();
+                }
+
+                ++strokeId;
+
+                Transform tmpGesture = Instantiate(gestureOnScreenPrefab, transform.position, transform.rotation) as Transform;
+                currentGestureLineRenderer = tmpGesture.GetComponent<LineRenderer>();
+
+                gestureLinesRenderer.Add(currentGestureLineRenderer);
+
+                vertexCount = 0;
+                Debug.Log(strokeId);
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                points.Add(new Point(virtualKeyPosition.x, -virtualKeyPosition.y, strokeId));
+
+                currentGestureLineRenderer.positionCount = ++vertexCount;
+                currentGestureLineRenderer.SetPosition(vertexCount - 1, Camera.main.ScreenToWorldPoint(new Vector3(virtualKeyPosition.x, virtualKeyPosition.y, 10)));
+            }
         }
-
-        if (Input.GetMouseButton(0))
-        {
-            points.Add(new Point(virtualKeyPosition.x, -virtualKeyPosition.y, strokeId));
-
-            currentGestureLineRenderer.positionCount = ++vertexCount;
-            currentGestureLineRenderer.SetPosition(vertexCount - 1, Camera.main.ScreenToWorldPoint(new Vector3(virtualKeyPosition.x, virtualKeyPosition.y, 10)));
-        }
-    }
-
-    public void OnRecognizeButtonClick()
-    {
-        recognized = true;
-        foreach (var point in points.ToArray()){
-            Debug.Log("X:" + point.X + " " + "Y:" + point.Y + " " + "strokeID: " + point.StrokeID);
-        }
-        
-        Gesture candidate = new Gesture(points.ToArray());
-        string gestureResult = QPointCloudRecognizer.Classify(candidate, trainingSet.ToArray());
-        Debug.Log(gestureResult);
     }
 }
