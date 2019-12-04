@@ -1472,9 +1472,10 @@ GameObject:
   - component: {fileID: 1889680938717081326}
   - component: {fileID: 2481308029676536996}
   - component: {fileID: 8932294991425645832}
+  - component: {fileID: 4543130796931370067}
   m_Layer: 0
   m_Name: xbot
-  m_TagString: Untagged
+  m_TagString: Dummy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1506,7 +1507,7 @@ Animator:
   m_GameObject: {fileID: 4821143894094557575}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 710264baf9d1f7a4e924fff9dc7f4eb8, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 22b3cfc91909b634a9652caaa8cdd7f0, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1544,6 +1545,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4543130796931370067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821143894094557575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f8f90ad8a905de4b9661ae6640b2ee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4888872366188154078
 GameObject:
   m_ObjectHideFlags: 0

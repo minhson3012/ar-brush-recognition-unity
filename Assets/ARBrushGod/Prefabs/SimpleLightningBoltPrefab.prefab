@@ -216,7 +216,7 @@ MonoBehaviour:
   Generations: 6
   Duration: 0.03
   ChaosFactor: 0.15
-  ManualMode: 1
+  ManualMode: 0
   Rows: 1
   Columns: 21
   AnimationMode: 0
