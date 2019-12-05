@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using PDollarGestureRecognizer;
 using QDollarGestureRecognizer;
-using BrushGestures;
 using UnityEngine.UI;
 
 namespace BrushGestures
@@ -21,7 +20,7 @@ namespace BrushGestures
         private LineRenderer currentGestureLineRenderer;
         private bool recognized;
         private bool isAllowedToDraw = false;
-        BrushPowers brushPowers;
+        private BrushPowers brushPowers;
 
         // Start is called before the first frame update
         void Start()
@@ -30,6 +29,7 @@ namespace BrushGestures
             TextAsset[] gesturesXml = Resources.LoadAll<TextAsset>("GestureSet/");
             foreach (TextAsset gestureXml in gesturesXml)
                 trainingSet.Add(GestureIO.ReadGestureFromXML(gestureXml.text));
+            brushPowers = GetComponent<BrushPowers>();
         }
 
         // Update is called once per frame
@@ -65,23 +65,45 @@ namespace BrushGestures
             try
             {
                 recognized = true;
-                foreach (var point in points.ToArray())
-                {
-                    Debug.Log("X:" + point.X + " " + "Y:" + point.Y + " " + "strokeID: " + point.StrokeID);
-                }
+                // foreach (var point in points.ToArray())
+                // {
+                //     // Debug.Log("X:" + point.X + " " + "Y:" + point.Y + " " + "strokeID: " + point.StrokeID);
+                // }
 
                 //Recognize drawing
                 Gesture candidate = new Gesture(points.ToArray());
                 gestureResult = QPointCloudRecognizer.Classify(candidate, trainingSet.ToArray());
+                Debug.Log(gestureResult);
             }
             catch
             {
                 gestureResult = "none";
             }
             //Activate power visualizer
-            brushPowers = GestureCanvas.GetComponent<BrushPowers>();
+            DestroyLines();
             brushPowers.InvokePower(gestureResult);
             Debug.Log(gestureResult);
+        }
+
+        public void DestroyLines()
+        {
+            if (recognized)
+            {
+
+                recognized = false;
+                strokeId = -1;
+
+                points.Clear();
+
+                foreach (LineRenderer lineRenderer in gestureLinesRenderer)
+                {
+
+                    lineRenderer.positionCount = 0;
+                    Destroy(lineRenderer.gameObject);
+                }
+
+                gestureLinesRenderer.Clear();
+            }
         }
 
         private void RenderLines()
@@ -93,33 +115,17 @@ namespace BrushGestures
 
             if (Input.GetMouseButtonDown(0))
             {
-                if (recognized)
-                {
-
-                    recognized = false;
-                    strokeId = -1;
-
-                    points.Clear();
-
-                    foreach (LineRenderer lineRenderer in gestureLinesRenderer)
-                    {
-
-                        lineRenderer.positionCount = 0;
-                        Destroy(lineRenderer.gameObject);
-                    }
-
-                    gestureLinesRenderer.Clear();
-                }
-
                 ++strokeId;
 
                 Transform tmpGesture = Instantiate(gestureOnScreenPrefab, transform.position, transform.rotation) as Transform;
+                tmpGesture.transform.SetParent(GameObject.Find("First Person Camera").transform);
                 currentGestureLineRenderer = tmpGesture.GetComponent<LineRenderer>();
+                currentGestureLineRenderer.startWidth = 0.003f;
+                currentGestureLineRenderer.endWidth = 0.003f;
 
                 gestureLinesRenderer.Add(currentGestureLineRenderer);
 
                 vertexCount = 0;
-                Debug.Log(strokeId);
             }
 
             if (Input.GetMouseButton(0))
@@ -127,7 +133,7 @@ namespace BrushGestures
                 points.Add(new Point(virtualKeyPosition.x, -virtualKeyPosition.y, strokeId));
 
                 currentGestureLineRenderer.positionCount = ++vertexCount;
-                currentGestureLineRenderer.SetPosition(vertexCount - 1, Camera.main.ScreenToWorldPoint(new Vector3(virtualKeyPosition.x, virtualKeyPosition.y, 10)));
+                currentGestureLineRenderer.SetPosition(vertexCount - 1, Camera.main.ScreenToWorldPoint(new Vector3(virtualKeyPosition.x, virtualKeyPosition.y, 0.15f)));
             }
         }
     }

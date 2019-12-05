@@ -1,34 +1,81 @@
-using System.Collections.Generic;
 using GoogleARCore;
-using GoogleARCore.Examples.Common;
 using UnityEngine;
-using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace BrushGestures
 {
     public class BrushPowers : MonoBehaviour
     {
+        //ARCore Camera
         public Camera FirstPersonCamera;
-        private bool powerActive = false;
+        //Screen Reticle
         public GameObject Reticle;
-        public GameObject DrawButton;
+        //Draw Button
+        public Button DrawButton;
+        //Accept Button
+        public Button AcceptButton;
+        //Cancel Button
+        public Button CancelButton;
+        //List of objects to spawn
+        public GameObject[] objectToSpawnList;
+        //Is power active?
+        private bool powerActive = false;
+        //Radius circle
+        private GameObject circleRadius;
+        //Radius circle line color
+        private Color lineColor;
+        //Gesture recognizer
+        private GestureScript gesture;
+        //Object to spawn
+        private GameObject objectToSpawn;
+        //Thunder script
+        private ThunderScript thunderScript;
+        private BombScript bombScript;
+        private RainScript rainScript;
+        //SpawnPower delegate
+        delegate void SpawnPower(Vector3 position, Quaternion rotation);
+        SpawnPower spawnPower;
+
+        void Start()
+        {
+            gesture = GetComponent<GestureScript>();
+            thunderScript = GetComponent<ThunderScript>();
+            bombScript = GetComponent<BombScript>();
+            rainScript = GetComponent<RainScript>();
+        }
         public void InvokePower(string power)
         {
-            switch (power)
+            if (power.Equals("none"))
             {
-                case "thunder":
-                    ShowPowerUI();
-                    return;
-                case "rain":
-                    return;
-                case "fire":
-                    return;
-                case "bullettime":
-                    return;
-                case "blizzard":
-                    return;
-                case "none":
-                    return;
+                return;
+            }
+            else
+            {
+                SpawnCircle();
+                ShowPowerUI();
+                switch (power)
+                {
+                    case "thunder":
+                        lineColor = Color.yellow;
+                        AcceptButton.onClick.AddListener(thunderScript.SpawnThunder);
+                        return;
+                    case "wind":
+                        lineColor = Color.green;
+                        return;
+                    case "null":
+                        lineColor = Color.white;
+                        AcceptButton.onClick.AddListener(bombScript.SpawnBomb);
+                        return;
+                    case "rain":
+                        lineColor = Color.blue;
+                        AcceptButton.onClick.AddListener(rainScript.SpawnRain);
+                        return;
+                    case "fire":
+                        lineColor = Color.red;
+                        return;
+                    case "blizzard":
+                        return;
+                }
             }
         }
 
@@ -38,7 +85,9 @@ namespace BrushGestures
                 UpdatePowerIndicator();
         }
 
-        //Cast a ray from center of the screen to world, and then render a circle there
+        /// <summary>
+        /// Spawn a circle radius following the reticle
+        /// </summary>
         void UpdatePowerIndicator()
         {
             TrackableHit hit;
@@ -58,48 +107,66 @@ namespace BrushGestures
                 }
                 else
                 {
-                    var circleRadius = new GameObject { name = "Circle" };
                     circleRadius.transform.parent = GameObject.Find("Anchor").transform;
-                    circleRadius.DrawCircle(1f, 0.01f);
+                    circleRadius.transform.position = new Vector3(hit.Pose.position.x, hit.Pose.position.y, hit.Pose.position.z);
+                    circleRadius.transform.rotation = hit.Pose.rotation;
+                    circleRadius.DrawCircle(0.1f, 0.01f, lineColor);
                 }
             }
         }
 
         //Show PowerUI and hide draw button
-        private void ShowPowerUI()
+        public void ShowPowerUI()
         {
             powerActive = true;
-            DrawButton.SetActive(false);
-            foreach (var obj in GameObject.FindGameObjectsWithTag("PowerUI"))
-            {
-                obj.SetActive(true);
-            }
-            
+            DrawButton.gameObject.SetActive(false);
+            Reticle.SetActive(true);
+            AcceptButton.gameObject.SetActive(true);
+            CancelButton.gameObject.SetActive(true);
         }
 
         //Hide PowerUI and show draw button
-        private void HidePowerUI()
+        public void HidePowerUI()
         {
             powerActive = false;
-            DrawButton.SetActive(true);
-            foreach (var obj in GameObject.FindGameObjectsWithTag("PowerUI"))
+            DrawButton.gameObject.SetActive(true);
+            Reticle.SetActive(false);
+            AcceptButton.gameObject.SetActive(false);
+            CancelButton.gameObject.SetActive(false);
+        }
+
+        //Destroy circle radius
+        private void DestroyCircle()
+        {
+            if (circleRadius.GetComponent<Renderer>())
             {
-                obj.SetActive(false);
+                Destroy(circleRadius.GetComponent<Renderer>().material);
             }
+            Destroy(circleRadius);
+        }
+
+        private void SpawnCircle()
+        {
+            circleRadius = new GameObject { name = "Circle" };
         }
 
         //When player clicks the Accept button
-        public void OnAcceptButtonClick()
+        public void CleanupUI()
         {
-            Debug.Log("POWER ACTIVATE!");
+            Debug.Log("Cleaning up!");
+            AcceptButton.onClick.RemoveAllListeners();
             HidePowerUI();
+            DestroyCircle();
+            gesture.DestroyLines();
         }
 
         //When player clicks the Cancel button
-        public void OnCancelButtonClick()
-        {
-            Debug.Log("Cancelled");
-            HidePowerUI();
-        }
+        // public void OnCancelButtonClick()
+        // {
+        //     Debug.Log("Cancelled");
+        //     HidePowerUI();
+        //     DestroyCircle();
+        //     gesture.DestroyLines();
+        // }
     }
 }

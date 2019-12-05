@@ -59,6 +59,7 @@
 **/
 using System;
 using PDollarGestureRecognizer;
+using UnityEngine;
 
 namespace QDollarGestureRecognizer
 {

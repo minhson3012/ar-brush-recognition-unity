@@ -4,6 +4,7 @@
     using GoogleARCore;
     using GoogleARCore.Examples.Common;
     using UnityEngine;
+    using UnityEngine.UI;
     using UnityEngine.EventSystems;
 
 #if UNITY_EDITOR
@@ -27,7 +28,7 @@
         /// </summary>
         public GameObject GameObjectPrefab;
 
-        public GameObject DrawButton;
+        public Button DrawButton;
 
         /// <summary>
         /// True if the app is in the process of quitting due to an ARCore connection error,
@@ -67,23 +68,19 @@
             }
 
             // Raycast against the location the player touched to search for planes.
-            TrackableHit hit;
-            TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
-                TrackableHitFlags.FeaturePointWithSurfaceNormal;
-
-            if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
+            if (!isInstantiated)
             {
-                if (hit.Trackable is DetectedPlane)
+                TrackableHit hit;
+                TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
+                    TrackableHitFlags.FeaturePointWithSurfaceNormal;
+                if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
                 {
-                    DetectedPlane detectedPlane = hit.Trackable as DetectedPlane;
-                    if (detectedPlane.PlaneType == DetectedPlaneType.HorizontalUpwardFacing)
+                    if (hit.Trackable is DetectedPlane)
                     {
-                        if (isInstantiated)
+                        DetectedPlane detectedPlane = hit.Trackable as DetectedPlane;
+                        if (detectedPlane.PlaneType == DetectedPlaneType.HorizontalUpwardFacing)
                         {
-                            Debug.Log("Scene instantiated");
-                        }
-                        else
-                        {
+
                             // Instantiate prefab at the hit pose.
                             var gameObject = Instantiate(GameObjectPrefab, hit.Pose.position, hit.Pose.rotation);
 
@@ -93,12 +90,12 @@
 
                             // Make game object a child of the anchor.
                             gameObject.transform.parent = anchor.transform;
+                            DrawButton.gameObject.SetActive(true);
                             isInstantiated = true;
                         }
                     }
                 }
             }
-            
         }
 
         /// <summary>
