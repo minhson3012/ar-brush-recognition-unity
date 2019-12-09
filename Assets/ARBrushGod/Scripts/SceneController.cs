@@ -29,13 +29,15 @@
         public GameObject GameObjectPrefab;
 
         public Button DrawButton;
-
+        public Button ResetButton;
         /// <summary>
         /// True if the app is in the process of quitting due to an ARCore connection error,
         /// otherwise false.
         /// </summary>
         private bool m_IsQuitting = false;
         private bool isInstantiated = false;
+        public Vector3 startPosition;
+        public Quaternion startRotation;
 
         /// <summary>
         /// The Unity Awake() method.
@@ -82,7 +84,9 @@
                         {
 
                             // Instantiate prefab at the hit pose.
-                            var gameObject = Instantiate(GameObjectPrefab, hit.Pose.position, hit.Pose.rotation);
+                            var gameObject = SpawnDummy(hit.Pose.position, hit.Pose.rotation);
+                            startPosition = hit.Pose.position;
+                            startRotation = hit.Pose.rotation;
 
                             // Create an anchor to allow ARCore to track the hitpoint as understanding of
                             // the physical world evolves.
@@ -91,6 +95,7 @@
                             // Make game object a child of the anchor.
                             gameObject.transform.parent = anchor.transform;
                             DrawButton.gameObject.SetActive(true);
+                            ResetButton.gameObject.SetActive(true);
                             isInstantiated = true;
                         }
                     }
@@ -98,16 +103,9 @@
             }
         }
 
-        /// <summary>
-        /// Check if the play scene is rendered
-        /// </summary>
-        private bool IsTracking()
+        public GameObject SpawnDummy(Vector3 position, Quaternion rotation)
         {
-            if (Session.Status != SessionStatus.Tracking)
-            {
-                return false;
-            }
-            return true;
+            return Instantiate(GameObjectPrefab, position, rotation);
         }
 
         /// <summary>
