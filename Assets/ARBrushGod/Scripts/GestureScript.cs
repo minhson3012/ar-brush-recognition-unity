@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using PDollarGestureRecognizer;
 using QDollarGestureRecognizer;
 using UnityEngine.UI;
+using GoogleARCore.Examples.HelloAR;
 
 namespace BrushGestures
 {
@@ -11,16 +12,19 @@ namespace BrushGestures
         public Transform gestureOnScreenPrefab;
         public GameObject GestureCanvas;
         public GameObject DrawButton;
+        public GameObject ResetButton;
         private List<Gesture> trainingSet = new List<Gesture>();
         private List<Point> points = new List<Point>();
         private int strokeId = -1;
         private Vector3 virtualKeyPosition = Vector2.zero;
         private int vertexCount = -1;
         private List<LineRenderer> gestureLinesRenderer = new List<LineRenderer>();
+        private List<Vector3> pointsList = new List<Vector3>();
         private LineRenderer currentGestureLineRenderer;
-        private bool recognized;
+        private bool recognized = false;
         private bool isAllowedToDraw = false;
         private BrushPowers brushPowers;
+        [SerializeField] private GameObject sceneController;
 
         // Start is called before the first frame update
         void Start()
@@ -30,6 +34,7 @@ namespace BrushGestures
             foreach (TextAsset gestureXml in gesturesXml)
                 trainingSet.Add(GestureIO.ReadGestureFromXML(gestureXml.text));
             brushPowers = GetComponent<BrushPowers>();
+            // sceneController = GetComponent<SceneController>();
         }
 
         // Update is called once per frame
@@ -85,25 +90,48 @@ namespace BrushGestures
             Debug.Log(gestureResult);
         }
 
+        public void OnResetButtonClick()
+        {
+            //Reset dummy
+            var dummy = GameObject.FindGameObjectWithTag("Dummy");
+            var scene = sceneController.GetComponent<SceneController>();
+            Vector3 position = scene.startPosition;
+            Quaternion rotation = scene.startRotation;
+            Destroy(dummy);
+            var newDummy = scene.SpawnDummy(position, rotation);
+            newDummy.transform.parent = GameObject.Find("Anchor").transform;
+
+            //Reset draw button
+            DrawButton.GetComponentInChildren<Text>().text = "Draw";
+            isAllowedToDraw = false;
+
+            //Reset variable
+            isAllowedToDraw = false;
+
+            //Reset UI
+            brushPowers.CleanupUI();
+        }
+
         public void DestroyLines()
         {
             if (recognized)
             {
-
                 recognized = false;
-                strokeId = -1;
-
-                points.Clear();
-
-                foreach (LineRenderer lineRenderer in gestureLinesRenderer)
-                {
-
-                    lineRenderer.positionCount = 0;
-                    Destroy(lineRenderer.gameObject);
-                }
-
-                gestureLinesRenderer.Clear();
             }
+            strokeId = -1;
+
+            points.Clear();
+            pointsList.Clear();
+
+            foreach (LineRenderer lineRenderer in gestureLinesRenderer)
+            {
+
+                lineRenderer.positionCount = 0;
+                Destroy(lineRenderer.gameObject);
+            }
+
+            gestureLinesRenderer.Clear();
+
         }
 
         private void RenderLines()
@@ -111,6 +139,7 @@ namespace BrushGestures
             if (Input.touchCount > 0 || Input.GetMouseButton(0))
             {
                 virtualKeyPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
+                pointsList.Add(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.15f));
             }
 
             if (Input.GetMouseButtonDown(0))
@@ -133,7 +162,18 @@ namespace BrushGestures
                 points.Add(new Point(virtualKeyPosition.x, -virtualKeyPosition.y, strokeId));
 
                 currentGestureLineRenderer.positionCount = ++vertexCount;
-                currentGestureLineRenderer.SetPosition(vertexCount - 1, Camera.main.ScreenToWorldPoint(new Vector3(virtualKeyPosition.x, virtualKeyPosition.y, 0.15f)));
+                // currentGestureLineRenderer.SetPosition(vertexCount - 1, Camera.main.ScreenToWorldPoint(new Vector3(virtualKeyPosition.x, virtualKeyPosition.y, 0.15f)));
+            }
+            
+            int currentBaseIndex = 0;
+            for (int rendererIndex = 0; rendererIndex < gestureLinesRenderer.Count; rendererIndex++)
+            {   
+                LineRenderer currentRenderer = gestureLinesRenderer[rendererIndex];
+                for(int i = 0; i < currentRenderer.positionCount; i++)
+                {
+                    currentRenderer.SetPosition(i, Camera.main.ScreenToWorldPoint(pointsList[currentBaseIndex + i]));
+                }
+                currentBaseIndex = currentBaseIndex + currentRenderer.positionCount;
             }
         }
     }
