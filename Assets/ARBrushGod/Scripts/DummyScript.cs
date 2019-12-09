@@ -11,7 +11,7 @@ public class DummyScript : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         isShocked = false;
-        StartCoroutine(Reset(true, 0f));
+        StartCoroutine(ResetRagdoll(true, 0f));
     }
 
     public void setShocked()
@@ -23,7 +23,6 @@ public class DummyScript : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log("DIE");
         animator.enabled = false;
         Rigidbody[] bodies = GetComponentsInChildren<Rigidbody>();
         Collider[] colliders = GetComponentsInChildren<Collider>();
@@ -37,10 +36,10 @@ public class DummyScript : MonoBehaviour
         {
             col.enabled = true;
         }
-        StartCoroutine(Reset(false, 1.5f));
+        StartCoroutine(ResetRagdoll(false, 1.5f));
     }
 
-    IEnumerator Reset(bool enableAnimator, float delayTime)
+    IEnumerator ResetRagdoll(bool enableAnimator, float delayTime)
     {
         yield return new WaitForSeconds(delayTime);
         animator.enabled = enableAnimator;
