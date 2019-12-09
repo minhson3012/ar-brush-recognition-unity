@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &3661575304330846241
+--- !u!1001 &4869378523731474537
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,12 +10,17 @@ PrefabInstance:
     - target: {fileID: 8688183835000853108, guid: 4c7a78eddb5a63848bb8e47fb20b961d,
         type: 3}
       propertyPath: InitialModule.startSize.minScalar
-      value: 20
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 8688183835000853108, guid: 4c7a78eddb5a63848bb8e47fb20b961d,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 20
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 8688183835000853108, guid: 4c7a78eddb5a63848bb8e47fb20b961d,
+        type: 3}
+      propertyPath: InitialModule.startRotationX.scalar
+      value: 1.5707963
       objectReference: {fileID: 0}
     - target: {fileID: 8688183835000853108, guid: 4c7a78eddb5a63848bb8e47fb20b961d,
         type: 3}
@@ -32,11 +37,6 @@ PrefabInstance:
       propertyPath: InitialModule.startColor.maxColor.b
       value: 0.9339623
       objectReference: {fileID: 0}
-    - target: {fileID: 8688183835000853108, guid: 4c7a78eddb5a63848bb8e47fb20b961d,
-        type: 3}
-      propertyPath: InitialModule.startRotationX.scalar
-      value: 1.5707963
-      objectReference: {fileID: 0}
     - target: {fileID: 8814839804274378802, guid: 4c7a78eddb5a63848bb8e47fb20b961d,
         type: 3}
       propertyPath: m_Name
@@ -50,7 +50,7 @@ PrefabInstance:
     - target: {fileID: 8817817500864579098, guid: 4c7a78eddb5a63848bb8e47fb20b961d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.028
+      value: 0.475
       objectReference: {fileID: 0}
     - target: {fileID: 8817817500864579098, guid: 4c7a78eddb5a63848bb8e47fb20b961d,
         type: 3}
