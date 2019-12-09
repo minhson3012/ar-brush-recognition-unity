@@ -24,6 +24,7 @@ namespace BrushGestures
             dummyScript = dummy.GetComponent<DummyScript>();
             brushPowers = GetComponent<BrushPowers>();
             power = Instantiate(Bomb, GameObject.Find("Circle").transform.position, GameObject.Find("Circle").transform.rotation);
+            power.transform.parent = GameObject.Find("Anchor").transform;
             brushPowers.CleanupUI();
             isSpawned = true;
         }

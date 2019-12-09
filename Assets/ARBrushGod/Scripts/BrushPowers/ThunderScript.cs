@@ -1,6 +1,4 @@
-using GoogleARCore;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace BrushGestures 
 {
@@ -17,6 +15,7 @@ namespace BrushGestures
         {
             brushPowers = GetComponent<BrushPowers>();
             power = Instantiate(Thunder, GameObject.Find("Circle").transform.position, GameObject.Find("Circle").transform.rotation);
+            power.transform.parent = GameObject.Find("Anchor").transform;
             brushPowers.CleanupUI();
             CheckForHit();
             Destroy(power, 2);

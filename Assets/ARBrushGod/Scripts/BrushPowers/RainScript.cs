@@ -1,6 +1,4 @@
-using GoogleARCore;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace BrushGestures
 {
@@ -22,6 +20,7 @@ namespace BrushGestures
             circle = GameObject.Find("Circle");
             Vector3 position = new Vector3(circle.transform.position.x, circle.transform.position.y + 1f, circle.transform.position.z);
             power = Instantiate(Rain, position, Rain.transform.rotation);
+            power.transform.parent = GameObject.Find("Anchor").transform;
             brushPowers.CleanupUI();
             Destroy(power, 5);
         }
