@@ -12,8 +12,6 @@ namespace BrushGestures
         public float duration = 1.5f;
         GameObject power;
         BrushPowers brushPowers;
-        GameObject dummy;
-        DummyScript dummyScript;
         GameObject circle;
         Vector3 minScale = new Vector3(0.001f, 0.001f, 0.001f);
         Vector3 maxScale = new Vector3(0.006f, 0.006f, 0.006f);
@@ -21,16 +19,13 @@ namespace BrushGestures
 
         public void SpawnTree()
         {
-            // countdown = delay;
-            dummy = GameObject.FindGameObjectWithTag("Dummy");
-            dummyScript = dummy.GetComponent<DummyScript>();
             brushPowers = GetComponent<BrushPowers>();
             circle = GameObject.Find("Circle");
             Vector3 position = new Vector3(circle.transform.position.x, circle.transform.position.y, circle.transform.position.z);
             power = Instantiate(Tree, position, Tree.transform.rotation);
             power.transform.parent = GameObject.Find("Anchor").transform;
             brushPowers.CleanupUI();
-            // Destroy(power, 5);
+            Destroy(power, 5);
         }
 
         void Update()

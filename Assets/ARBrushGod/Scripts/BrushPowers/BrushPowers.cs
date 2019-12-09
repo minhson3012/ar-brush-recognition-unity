@@ -29,6 +29,7 @@ namespace BrushGestures
         private BombScript bombScript;
         private RainScript rainScript;
         private TreeScript treeScript;
+        private FireScript fireScript;
         
         void Start()
         {
@@ -37,6 +38,7 @@ namespace BrushGestures
             bombScript = GetComponent<BombScript>();
             rainScript = GetComponent<RainScript>();
             treeScript = GetComponent<TreeScript>();
+            fireScript = GetComponent<FireScript>();
         }
         public void InvokePower(string power)
         {
@@ -69,7 +71,9 @@ namespace BrushGestures
                         lineColor = Color.green;
                         AcceptButton.onClick.AddListener(treeScript.SpawnTree);
                         return;
-                    case "blizzard":
+                    case "fire":
+                        lineColor = Color.red;
+                        AcceptButton.onClick.AddListener(fireScript.SpawnFire);
                         return;
                 }
             }
