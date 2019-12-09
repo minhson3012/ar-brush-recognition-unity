@@ -16,8 +16,6 @@ namespace BrushGestures
         public Button AcceptButton;
         //Cancel Button
         public Button CancelButton;
-        //List of objects to spawn
-        public GameObject[] objectToSpawnList;
         //Is power active?
         private bool powerActive = false;
         //Radius circle
@@ -26,22 +24,19 @@ namespace BrushGestures
         private Color lineColor;
         //Gesture recognizer
         private GestureScript gesture;
-        //Object to spawn
-        private GameObject objectToSpawn;
         //Thunder script
         private ThunderScript thunderScript;
         private BombScript bombScript;
         private RainScript rainScript;
-        //SpawnPower delegate
-        delegate void SpawnPower(Vector3 position, Quaternion rotation);
-        SpawnPower spawnPower;
-
+        private TreeScript treeScript;
+        
         void Start()
         {
             gesture = GetComponent<GestureScript>();
             thunderScript = GetComponent<ThunderScript>();
             bombScript = GetComponent<BombScript>();
             rainScript = GetComponent<RainScript>();
+            treeScript = GetComponent<TreeScript>();
         }
         public void InvokePower(string power)
         {
@@ -60,7 +55,7 @@ namespace BrushGestures
                         AcceptButton.onClick.AddListener(thunderScript.SpawnThunder);
                         return;
                     case "wind":
-                        lineColor = Color.green;
+                        lineColor = Color.cyan;
                         return;
                     case "null":
                         lineColor = Color.white;
@@ -70,8 +65,9 @@ namespace BrushGestures
                         lineColor = Color.blue;
                         AcceptButton.onClick.AddListener(rainScript.SpawnRain);
                         return;
-                    case "fire":
-                        lineColor = Color.red;
+                    case "tree":
+                        lineColor = Color.green;
+                        AcceptButton.onClick.AddListener(treeScript.SpawnTree);
                         return;
                     case "blizzard":
                         return;
@@ -138,10 +134,10 @@ namespace BrushGestures
         //Destroy circle radius
         private void DestroyCircle()
         {
-            if (circleRadius.GetComponent<Renderer>())
-            {
-                Destroy(circleRadius.GetComponent<Renderer>().material);
-            }
+            // if (circleRadius.GetComponent<Renderer>())
+            // {
+            //     Destroy(circleRadius.GetComponent<Renderer>().material);
+            // }
             Destroy(circleRadius);
         }
 
