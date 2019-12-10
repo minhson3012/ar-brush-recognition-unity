@@ -4,6 +4,7 @@ using PDollarGestureRecognizer;
 using QDollarGestureRecognizer;
 using UnityEngine.UI;
 using GoogleARCore.Examples.HelloAR;
+using UnityEngine.EventSystems;
 
 namespace BrushGestures
 {
@@ -136,6 +137,20 @@ namespace BrushGestures
 
         private void RenderLines()
         {
+            // If the player has not touched the screen, we are done with this update.
+            Touch touch;
+            if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
+            {
+                return;
+            }
+
+            // Should not handle input if the player is pointing on UI.
+            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+            {
+                return;
+            }
+            
+            //Handle inputs
             if (Input.touchCount > 0 || Input.GetMouseButton(0))
             {
                 virtualKeyPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
