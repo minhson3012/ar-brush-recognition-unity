@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using PDollarGestureRecognizer;
 using QDollarGestureRecognizer;
 using UnityEngine.UI;
-using GoogleARCore.Examples.HelloAR;
 using UnityEngine.EventSystems;
-
+using GoogleARCore.Examples.HelloAR;
 namespace BrushGestures
 {
     public class GestureScript : MonoBehaviour
@@ -137,26 +136,6 @@ namespace BrushGestures
 
         private void RenderLines()
         {
-            // If the player has not touched the screen, we are done with this update.
-            Touch touch;
-            if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
-            {
-                return;
-            }
-
-            // Should not handle input if the player is pointing on UI.
-            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-            {
-                return;
-            }
-            
-            //Handle inputs
-            if (Input.touchCount > 0 || Input.GetMouseButton(0))
-            {
-                virtualKeyPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
-                pointsList.Add(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.15f));
-            }
-
             if (Input.GetMouseButtonDown(0))
             {
                 ++strokeId;
@@ -172,19 +151,22 @@ namespace BrushGestures
                 vertexCount = 0;
             }
 
-            if (Input.GetMouseButton(0))
+            //Handle inputs
+            if (Input.touchCount > 0 || Input.GetMouseButton(0))
             {
+                virtualKeyPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
+                pointsList.Add(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.15f));
                 points.Add(new Point(virtualKeyPosition.x, -virtualKeyPosition.y, strokeId));
 
                 currentGestureLineRenderer.positionCount = ++vertexCount;
                 // currentGestureLineRenderer.SetPosition(vertexCount - 1, Camera.main.ScreenToWorldPoint(new Vector3(virtualKeyPosition.x, virtualKeyPosition.y, 0.15f)));
             }
-            
+
             int currentBaseIndex = 0;
             for (int rendererIndex = 0; rendererIndex < gestureLinesRenderer.Count; rendererIndex++)
-            {   
+            {
                 LineRenderer currentRenderer = gestureLinesRenderer[rendererIndex];
-                for(int i = 0; i < currentRenderer.positionCount; i++)
+                for (int i = 0; i < currentRenderer.positionCount; i++)
                 {
                     currentRenderer.SetPosition(i, Camera.main.ScreenToWorldPoint(pointsList[currentBaseIndex + i]));
                 }
