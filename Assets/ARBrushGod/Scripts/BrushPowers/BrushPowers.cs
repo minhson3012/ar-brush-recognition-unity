@@ -16,6 +16,7 @@ namespace BrushGestures
         public Button AcceptButton;
         //Cancel Button
         public Button CancelButton;
+        public GameObject PowerText;
         //Is power active?
         private bool powerActive = false;
         //Radius circle
@@ -30,7 +31,8 @@ namespace BrushGestures
         private RainScript rainScript;
         private TreeScript treeScript;
         private FireScript fireScript;
-        
+        private WindScript windScript;
+
         void Start()
         {
             gesture = GetComponent<GestureScript>();
@@ -39,6 +41,7 @@ namespace BrushGestures
             rainScript = GetComponent<RainScript>();
             treeScript = GetComponent<TreeScript>();
             fireScript = GetComponent<FireScript>();
+            windScript = GetComponent<WindScript>();
         }
         public void InvokePower(string power)
         {
@@ -54,25 +57,38 @@ namespace BrushGestures
                 {
                     case "thunder":
                         lineColor = Color.yellow;
+                        circleRadius.GetComponentInChildren<TextMesh>().text = "Thunder";
+                        circleRadius.GetComponentInChildren<TextMesh>().color = Color.yellow;
                         AcceptButton.onClick.AddListener(thunderScript.SpawnThunder);
                         return;
                     case "wind":
                         lineColor = Color.cyan;
+                        circleRadius.GetComponentInChildren<TextMesh>().text = "Wind";
+                        circleRadius.GetComponentInChildren<TextMesh>().color = Color.cyan;
+                        AcceptButton.onClick.AddListener(windScript.SpawnWind);
                         return;
                     case "null":
                         lineColor = Color.white;
+                        circleRadius.GetComponentInChildren<TextMesh>().text = "Bomb";
+                        circleRadius.GetComponentInChildren<TextMesh>().color = Color.white;
                         AcceptButton.onClick.AddListener(bombScript.SpawnBomb);
                         return;
                     case "rain":
                         lineColor = Color.blue;
+                        circleRadius.GetComponentInChildren<TextMesh>().text = "Rain";
+                        circleRadius.GetComponentInChildren<TextMesh>().color = Color.blue;
                         AcceptButton.onClick.AddListener(rainScript.SpawnRain);
                         return;
                     case "tree":
                         lineColor = Color.green;
+                        circleRadius.GetComponentInChildren<TextMesh>().text = "Tree";
+                        circleRadius.GetComponentInChildren<TextMesh>().color = Color.green;
                         AcceptButton.onClick.AddListener(treeScript.SpawnTree);
                         return;
                     case "fire":
                         lineColor = Color.red;
+                        circleRadius.GetComponentInChildren<TextMesh>().text = "Fire";
+                        circleRadius.GetComponentInChildren<TextMesh>().color = Color.red;
                         AcceptButton.onClick.AddListener(fireScript.SpawnFire);
                         return;
                 }
@@ -148,6 +164,9 @@ namespace BrushGestures
         private void SpawnCircle()
         {
             circleRadius = new GameObject { name = "Circle" };
+            var textObject = Instantiate(PowerText, new Vector3(circleRadius.transform.position.x, circleRadius.transform.position.y, circleRadius.transform.position.x - 0.15f),
+                                         PowerText.transform.rotation);
+            textObject.transform.parent = circleRadius.transform;
         }
 
         //When player clicks the Accept button

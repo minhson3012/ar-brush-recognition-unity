@@ -454,6 +454,8 @@ MonoBehaviour:
   DrawButton: {fileID: 1739848022}
   AcceptButton: {fileID: 1123846645}
   CancelButton: {fileID: 1991500217}
+  PowerText: {fileID: 765738479511103604, guid: 2d9de2a456633f443ae6fe92855a6afd,
+    type: 3}
 --- !u!114 &568735651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,6 +539,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Thunder: {fileID: 8639406061575655827, guid: fa80c9d0aa1880044b8711578669691c, type: 3}
+--- !u!114 &568735657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 568735649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b518ae6059953d54188d03b335ce2c9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Wind: {fileID: 5727435974543073179, guid: f9a2f3c67b125784699d67c38d2512cd, type: 3}
 --- !u!114 &568735660
 MonoBehaviour:
   m_ObjectHideFlags: 0

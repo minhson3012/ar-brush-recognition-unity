@@ -35,6 +35,7 @@ namespace BrushGestures
                 power.transform.localScale = Vector3.Lerp(minScale, maxScale, lerpTime);
                 lerpTime += Time.deltaTime * speed;
             }
+            else if(!power) lerpTime = 0f;
         }
     }
 }
