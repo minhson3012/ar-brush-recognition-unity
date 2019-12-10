@@ -44,6 +44,13 @@ namespace BrushGestures
             {
                 //Debug.Log("Drawing: " + isAllowedToDraw);
                 RenderLines();
+                //If there's no input, update lines positions
+                Touch touch;
+                if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
+                {
+                    UpdateLines();
+                    return;
+                }
             }
         }
 
@@ -134,8 +141,16 @@ namespace BrushGestures
 
         }
 
+        //Render drawings
         private void RenderLines()
         {
+
+            //Handle inputs
+            if (Input.touchCount > 0 || Input.GetMouseButton(0))
+            {
+                virtualKeyPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
+            }
+
             if (Input.GetMouseButtonDown(0))
             {
                 ++strokeId;
@@ -149,23 +164,28 @@ namespace BrushGestures
                 gestureLinesRenderer.Add(currentGestureLineRenderer);
 
                 vertexCount = 0;
+
+                //If there's a new stroke, update lines positions
+                UpdateLines();
             }
 
-            //Handle inputs
-            if (Input.touchCount > 0 || Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0))
             {
-                virtualKeyPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
-                pointsList.Add(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0.15f));
                 points.Add(new Point(virtualKeyPosition.x, -virtualKeyPosition.y, strokeId));
-
+                pointsList.Add(new Vector3(virtualKeyPosition.x, virtualKeyPosition.y, 0.15f));
                 currentGestureLineRenderer.positionCount = ++vertexCount;
                 // currentGestureLineRenderer.SetPosition(vertexCount - 1, Camera.main.ScreenToWorldPoint(new Vector3(virtualKeyPosition.x, virtualKeyPosition.y, 0.15f)));
             }
 
+        }
+
+        //Update drawn lines positions
+        private void UpdateLines()
+        {
             int currentBaseIndex = 0;
             for (int rendererIndex = 0; rendererIndex < gestureLinesRenderer.Count; rendererIndex++)
             {
-                LineRenderer currentRenderer = gestureLinesRenderer[rendererIndex];
+                var currentRenderer = gestureLinesRenderer[rendererIndex];
                 for (int i = 0; i < currentRenderer.positionCount; i++)
                 {
                     currentRenderer.SetPosition(i, Camera.main.ScreenToWorldPoint(pointsList[currentBaseIndex + i]));
