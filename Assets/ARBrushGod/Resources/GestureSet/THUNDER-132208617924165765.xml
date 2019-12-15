@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Gesture Name = "thunder">
+	<Stroke>
+		<Point X = "165" Y = "74" T = "0" Pressure = "0" />
+		<Point X = "165" Y = "76" T = "0" Pressure = "0" />
+		<Point X = "166" Y = "79" T = "0" Pressure = "0" />
+		<Point X = "168" Y = "86" T = "0" Pressure = "0" />
+		<Point X = "169" Y = "95" T = "0" Pressure = "0" />
+		<Point X = "170" Y = "106" T = "0" Pressure = "0" />
+		<Point X = "171" Y = "118" T = "0" Pressure = "0" />
+		<Point X = "171" Y = "130" T = "0" Pressure = "0" />
+		<Point X = "171" Y = "142" T = "0" Pressure = "0" />
+		<Point X = "171" Y = "151" T = "0" Pressure = "0" />
+		<Point X = "172" Y = "159" T = "0" Pressure = "0" />
+		<Point X = "173" Y = "165" T = "0" Pressure = "0" />
+		<Point X = "174" Y = "167" T = "0" Pressure = "0" />
+		<Point X = "175" Y = "168" T = "0" Pressure = "0" />
+		<Point X = "177" Y = "168" T = "0" Pressure = "0" />
+		<Point X = "179" Y = "168" T = "0" Pressure = "0" />
+		<Point X = "182" Y = "167" T = "0" Pressure = "0" />
+		<Point X = "188" Y = "165" T = "0" Pressure = "0" />
+		<Point X = "195" Y = "162" T = "0" Pressure = "0" />
+		<Point X = "203" Y = "159" T = "0" Pressure = "0" />
+		<Point X = "211" Y = "155" T = "0" Pressure = "0" />
+		<Point X = "217" Y = "152" T = "0" Pressure = "0" />
+		<Point X = "221" Y = "150" T = "0" Pressure = "0" />
+		<Point X = "224" Y = "149" T = "0" Pressure = "0" />
+		<Point X = "226" Y = "149" T = "0" Pressure = "0" />
+		<Point X = "228" Y = "151" T = "0" Pressure = "0" />
+		<Point X = "230" Y = "156" T = "0" Pressure = "0" />
+		<Point X = "231" Y = "165" T = "0" Pressure = "0" />
+		<Point X = "232" Y = "174" T = "0" Pressure = "0" />
+		<Point X = "229" Y = "185" T = "0" Pressure = "0" />
+		<Point X = "226" Y = "197" T = "0" Pressure = "0" />
+		<Point X = "223" Y = "213" T = "0" Pressure = "0" />
+		<Point X = "216" Y = "230" T = "0" Pressure = "0" />
+		<Point X = "209" Y = "249" T = "0" Pressure = "0" />
+		<Point X = "200" Y = "270" T = "0" Pressure = "0" />
+		<Point X = "191" Y = "292" T = "0" Pressure = "0" />
+		<Point X = "181" Y = "313" T = "0" Pressure = "0" />
+		<Point X = "174" Y = "333" T = "0" Pressure = "0" />
+		<Point X = "163" Y = "356" T = "0" Pressure = "0" />
+		<Point X = "156" Y = "373" T = "0" Pressure = "0" />
+		<Point X = "152" Y = "384" T = "0" Pressure = "0" />
+		<Point X = "150" Y = "391" T = "0" Pressure = "0" />
+	</Stroke>
+</Gesture>
