@@ -27,7 +27,7 @@
         /// A prefab to place when a raycast from a user touch hits a feature point.
         /// </summary>
         public GameObject GameObjectPrefab;
-
+        public GameObject PlacementIndicator;
         public Button DrawButton;
         public Button ResetButton;
         /// <summary>
@@ -38,6 +38,7 @@
         private bool isInstantiated = false;
         public Vector3 startPosition;
         public Quaternion startRotation;
+        Transform indicatorTransform;
 
         /// <summary>
         /// The Unity Awake() method.
@@ -55,54 +56,80 @@
         public void Update()
         {
             _UpdateApplicationLifecycle();
-
-            // If the player has not touched the screen, we are done with this update.
-            Touch touch;
-            if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
+            TrackableHit hit;
+            TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
+                TrackableHitFlags.FeaturePointWithSurfaceNormal;
+            var screenCenter = Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
+            //Raycast from center of screen
+            if (Frame.Raycast(screenCenter.x, screenCenter.y, raycastFilter, out hit))
             {
-                return;
-            }
-
-            // Should not handle input if the player is pointing on UI.
-            if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
-            {
-                return;
-            }
-
-            // Raycast against the location the player touched to search for planes.
-            if (!isInstantiated)
-            {
-                TrackableHit hit;
-                TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
-                    TrackableHitFlags.FeaturePointWithSurfaceNormal;
-                if (Frame.Raycast(touch.position.x, touch.position.y, raycastFilter, out hit))
+                if (hit.Trackable is DetectedPlane)
                 {
-                    if (hit.Trackable is DetectedPlane)
+                    DetectedPlane detectedPlane = hit.Trackable as DetectedPlane;
+                    if (detectedPlane.PlaneType == DetectedPlaneType.HorizontalUpwardFacing)
                     {
-                        DetectedPlane detectedPlane = hit.Trackable as DetectedPlane;
-                        if (detectedPlane.PlaneType == DetectedPlaneType.HorizontalUpwardFacing)
+                        //If there's no indicator
+                        if (indicatorTransform == null)
                         {
+                            SpawnIndicator(hit.Pose.position, hit.Pose.rotation);
+                        }
+                        else
+                        {
+                            Touch touch;
+                            if (!isInstantiated)
+                            {
+                                //If there's no touch input, update indicator's transform
+                                if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
+                                {
+                                    UpdateIndicator(hit.Pose.position, hit.Pose.rotation);
+                                    return;
+                                }
 
-                            // Instantiate prefab at the hit pose.
-                            var gameObject = SpawnDummy(hit.Pose.position, hit.Pose.rotation);
-                            startPosition = hit.Pose.position;
-                            startRotation = hit.Pose.rotation;
+                                //Otherwise spawn stuff
+                                if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+                                {
+                                    var gameObject = SpawnDummy(hit.Pose.position, hit.Pose.rotation);
+                                    startPosition = hit.Pose.position;
+                                    startRotation = hit.Pose.rotation;
 
-                            // Create an anchor to allow ARCore to track the hitpoint as understanding of
-                            // the physical world evolves.
-                            var anchor = hit.Trackable.CreateAnchor(hit.Pose);
+                                    // Create an anchor to allow ARCore to track the hitpoint as understanding of
+                                    // the physical world evolves.
+                                    var anchor = hit.Trackable.CreateAnchor(hit.Pose);
 
-                            // Make game object a child of the anchor.
-                            gameObject.transform.parent = anchor.transform;
-                            DrawButton.gameObject.SetActive(true);
-                            ResetButton.gameObject.SetActive(true);
-                            isInstantiated = true;
+                                    // Make game object a child of the anchor.
+                                    gameObject.transform.parent = anchor.transform;
+                                    //Activate UI
+                                    DrawButton.gameObject.SetActive(true);
+                                    ResetButton.gameObject.SetActive(true);
+                                    //Deactivate indicator
+                                    indicatorTransform.gameObject.SetActive(false);
+                                    isInstantiated = true;
+                                }
+                            }
                         }
                     }
                 }
             }
         }
-
+        public void UpdateIndicator(Vector3 position, Quaternion rotation)
+        {
+            if (Session.Status == SessionStatus.Tracking)
+            {
+                indicatorTransform.gameObject.SetActive(true);
+                indicatorTransform.position = position;
+                Vector3 oneCentimeterUp = Vector3.up * 0.01f;
+                indicatorTransform.Translate(oneCentimeterUp, Space.Self);
+                indicatorTransform.rotation = rotation;
+            }
+            else
+            {
+                indicatorTransform.gameObject.SetActive(false);
+            }
+        }
+        public void SpawnIndicator(Vector3 position, Quaternion rotation)
+        {
+            indicatorTransform = Instantiate(PlacementIndicator, position, rotation).transform;
+        }
         public GameObject SpawnDummy(Vector3 position, Quaternion rotation)
         {
             return Instantiate(GameObjectPrefab, position, rotation);

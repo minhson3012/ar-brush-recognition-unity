@@ -44,13 +44,8 @@ namespace BrushGestures
             {
                 //Debug.Log("Drawing: " + isAllowedToDraw);
                 RenderLines();
-                //If there's no input, update lines positions
-                Touch touch;
-                if (Input.touchCount < 1 || (touch = Input.GetTouch(0)).phase != TouchPhase.Began)
-                {
-                    UpdateLines();
-                    return;
-                }
+                //Update lines positions
+                UpdateLines();
             }
         }
 
@@ -94,7 +89,6 @@ namespace BrushGestures
             //Activate power visualizer
             DestroyLines();
             brushPowers.InvokePower(gestureResult);
-            Debug.Log(gestureResult);
         }
 
         public void OnResetButtonClick()
@@ -165,8 +159,6 @@ namespace BrushGestures
 
                 vertexCount = 0;
 
-                //If there's a new stroke, update lines positions
-                UpdateLines();
             }
 
             if (Input.GetMouseButton(0))
@@ -174,7 +166,6 @@ namespace BrushGestures
                 points.Add(new Point(virtualKeyPosition.x, -virtualKeyPosition.y, strokeId));
                 pointsList.Add(new Vector3(virtualKeyPosition.x, virtualKeyPosition.y, 0.15f));
                 currentGestureLineRenderer.positionCount = ++vertexCount;
-                // currentGestureLineRenderer.SetPosition(vertexCount - 1, Camera.main.ScreenToWorldPoint(new Vector3(virtualKeyPosition.x, virtualKeyPosition.y, 0.15f)));
             }
 
         }

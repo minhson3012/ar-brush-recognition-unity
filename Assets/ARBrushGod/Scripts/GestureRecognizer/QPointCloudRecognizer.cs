@@ -94,6 +94,7 @@ namespace QDollarGestureRecognizer
                     gestureClass = template.Name;
                 }
             }
+            Debug.Log(minDistance);
             return gestureClass;
         }
 
