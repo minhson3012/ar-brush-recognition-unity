@@ -70,8 +70,8 @@ namespace QDollarGestureRecognizer
     {
         // $Q's two major optimization layers (Early Abandoning and Lower Bounding)
         // can be activated / deactivated as desired
-        public static bool UseEarlyAbandoning = true;
-        public static bool UseLowerBounding = true;
+        //public static bool UseEarlyAbandoning = true;
+        //public static bool UseLowerBounding = true;
 
         /// <summary>
         /// Main function of the $Q recognizer.
@@ -107,24 +107,24 @@ namespace QDollarGestureRecognizer
             float eps = 0.5f;                     // controls the number of greedy search trials (eps is in [0..1])
             int step = (int)Math.Floor(Math.Pow(n, 1.0f - eps));
 
-            if (UseLowerBounding)
+            //if (UseLowerBounding)
+            //{
+            float[] LB1 = ComputeLowerBound(gesture1.Points, gesture2.Points, gesture2.LUT, step);  // direction of matching: gesture1 --> gesture2
+            float[] LB2 = ComputeLowerBound(gesture2.Points, gesture1.Points, gesture1.LUT, step);  // direction of matching: gesture2 --> gesture1
+            for (int i = 0, indexLB = 0; i < n; i += step, indexLB++)
             {
-                float[] LB1 = ComputeLowerBound(gesture1.Points, gesture2.Points, gesture2.LUT, step);  // direction of matching: gesture1 --> gesture2
-                float[] LB2 = ComputeLowerBound(gesture2.Points, gesture1.Points, gesture1.LUT, step);  // direction of matching: gesture2 --> gesture1
-                for (int i = 0, indexLB = 0; i < n; i += step, indexLB++)
-                {
-                    if (LB1[indexLB] < minSoFar) minSoFar = Math.Min(minSoFar, CloudDistance(gesture1.Points, gesture2.Points, i, minSoFar));  // direction of matching: gesture1 --> gesture2 starting with index point i
-                    if (LB2[indexLB] < minSoFar) minSoFar = Math.Min(minSoFar, CloudDistance(gesture2.Points, gesture1.Points, i, minSoFar));  // direction of matching: gesture2 --> gesture1 starting with index point i   
-                }
+                if (LB1[indexLB] < minSoFar) minSoFar = Math.Min(minSoFar, CloudDistance(gesture1.Points, gesture2.Points, i, minSoFar));  // direction of matching: gesture1 --> gesture2 starting with index point i
+                if (LB2[indexLB] < minSoFar) minSoFar = Math.Min(minSoFar, CloudDistance(gesture2.Points, gesture1.Points, i, minSoFar));  // direction of matching: gesture2 --> gesture1 starting with index point i   
             }
-            else
-            {
-                for (int i = 0; i < n; i += step)
-                {
-                    minSoFar = Math.Min(minSoFar, CloudDistance(gesture1.Points, gesture2.Points, i, minSoFar));  // direction of matching: gesture1 --> gesture2 starting with index point i
-                    minSoFar = Math.Min(minSoFar, CloudDistance(gesture2.Points, gesture1.Points, i, minSoFar));  // direction of matching: gesture2 --> gesture1 starting with index point i   
-                }
-            }
+            //}
+            //else
+            //{
+            //    for (int i = 0; i < n; i += step)
+            //   {
+            //       minSoFar = Math.Min(minSoFar, CloudDistance(gesture1.Points, gesture2.Points, i, minSoFar));  // direction of matching: gesture1 --> gesture2 starting with index point i
+            //       minSoFar = Math.Min(minSoFar, CloudDistance(gesture2.Points, gesture1.Points, i, minSoFar));  // direction of matching: gesture2 --> gesture1 starting with index point i   
+            //   }
+            //}
 
             return minSoFar;
         }
@@ -187,11 +187,11 @@ namespace QDollarGestureRecognizer
                 indexesNotMatched[index] = indexesNotMatched[indexNotMatched];  // point indexesNotMatched[index] of the 2nd cloud is now matched to point i of the 1st cloud
                 sum += (weight--) * minDistance;           // weight each distance with a confidence coefficient that decreases from n to 1
 
-                if (UseEarlyAbandoning)
-                {
-                    if (sum >= minSoFar) 
-                        return sum;       // implement early abandoning
-                }
+                //if (UseEarlyAbandoning)
+                //{
+                if (sum >= minSoFar) 
+                    return sum;       // implement early abandoning
+                //}
 
                 i = (i + 1) % n;                           // advance to the next point in the 1st cloud
                 indexNotMatched++;                         // update the number of points from the 2nd cloud that haven't been matched yet
