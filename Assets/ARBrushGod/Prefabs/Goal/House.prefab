@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 2095353636}
   m_Layer: 0
   m_Name: House
-  m_TagString: Untagged
+  m_TagString: Goal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -264,8 +264,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0122227045, y: 0.017160093, z: 0.014152777}
-  m_Center: {x: 0, y: -0.0019954324, z: 0.0070573543}
+  m_Size: {x: 0.014420638, y: 0.019880861, z: 0.014152777}
+  m_Center: {x: 0.00007476012, y: -0.0019631595, z: 0.0070573543}
 --- !u!114 &2095353636
 MonoBehaviour:
   m_ObjectHideFlags: 0
