@@ -552,6 +552,9 @@ GameObject:
   - component: {fileID: 800826572154430011}
   - component: {fileID: 5253298023972650017}
   - component: {fileID: -3559368686363858184}
+  - component: {fileID: 6602634393668500956}
+  - component: {fileID: 3858471766873324738}
+  - component: {fileID: -7054708411333929093}
   m_Layer: 0
   m_Name: Blue
   m_TagString: Untagged
@@ -632,6 +635,49 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!114 &6602634393668500956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6038273353674341714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1880fe215ada35848999ddad8027ca8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3858471766873324738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6038273353674341714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e4c64a06c3d1c42a77c56bc69555ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingHealth: 100
+  currentHealth: 0
+  moveSpeed: 1
+  attackDamage: 10
+  sinkSpeed: 0.1
+--- !u!114 &-7054708411333929093
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6038273353674341714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4237675b584817046ac843934171fac2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeBetweenAttacks: 0.5
+  attackDamage: 10
 --- !u!1 &6051228693851565433
 GameObject:
   m_ObjectHideFlags: 0
