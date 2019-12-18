@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    public float timeBetweenAttacks = 0.5f;
+    public float timeBetweenAttacks = 1.5f;
     public int attackDamage;
 
     Animator animator;
@@ -12,6 +12,7 @@ public class EnemyAttack : MonoBehaviour
     GoalHealth goalHealth;
     EnemyHealth enemyHealth;
     bool goalInRange;
+    bool hasAttacked;
     float timer;
 
     // Start is called before the first frame update
@@ -21,6 +22,7 @@ public class EnemyAttack : MonoBehaviour
         goalHealth = goal.GetComponent<GoalHealth>();
         enemyHealth = GetComponent<EnemyHealth>();
         animator = GetComponent<Animator>();
+        hasAttacked = false;
     }
 
     // Update is called once per frame
@@ -28,7 +30,6 @@ public class EnemyAttack : MonoBehaviour
     {
         if (other.gameObject == goal)
         {
-            animator.SetTrigger("Attack");
             goalInRange = true;
         }
     }
@@ -37,7 +38,6 @@ public class EnemyAttack : MonoBehaviour
     {
         if (other.gameObject == goal)
         {
-            animator.SetTrigger("StopAttack");
             goalInRange = false;
         }
     }
@@ -45,6 +45,11 @@ public class EnemyAttack : MonoBehaviour
     void Update()
     {
         timer += Time.deltaTime;
+        if(goalInRange && hasAttacked && enemyHealth.currentHealth > 0) 
+        {
+            animator.SetTrigger("StopAttack");
+            hasAttacked = false;
+        }
         if (timer >= timeBetweenAttacks && goalInRange && enemyHealth.currentHealth > 0)
         {
             Attack();
@@ -62,7 +67,9 @@ public class EnemyAttack : MonoBehaviour
         
         if(goalHealth.currentHealth > 0)
         {
+            animator.SetTrigger("Attack");
             goalHealth.TakeDamage(attackDamage);
+            hasAttacked = true;
         }
     }
 }

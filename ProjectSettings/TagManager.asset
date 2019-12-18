@@ -8,6 +8,8 @@ TagManager:
   - DrawUI
   - Drawing
   - Dummy
+  - FxTemporaire
+  - Goal
   layers:
   - Default
   - TransparentFX
