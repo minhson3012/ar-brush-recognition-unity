@@ -4,5 +4,11 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/ARBrushGod/Scenes/Playground.unity
+    guid: 78243356b798b264b97dbc858463489a
+  - enabled: 1
+    path: Assets/ARBrushGod/Scenes/Game.unity
+    guid: ba02a0492c547794a921a790f3cde8e0
   m_configObjects: {}

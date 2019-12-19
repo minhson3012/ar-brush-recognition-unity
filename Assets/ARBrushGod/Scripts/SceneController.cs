@@ -28,6 +28,7 @@
         /// </summary>
         public GameObject GameObjectPrefab;
         public GameObject PlacementIndicator;
+        public GameObject SceneLoader;
         public Button DrawButton;
         public Button ResetButton;
         /// <summary>
@@ -88,22 +89,29 @@
                                 //Otherwise spawn stuff
                                 if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
                                 {
-                                    var gameObject = SpawnDummy(hit.Pose.position, hit.Pose.rotation);
-                                    startPosition = hit.Pose.position;
-                                    startRotation = hit.Pose.rotation;
+                                    // var gameObject = SpawnDummy(hit.Pose.position, hit.Pose.rotation);
+                                    // startPosition = hit.Pose.position;
+                                    // startRotation = hit.Pose.rotation;
 
                                     // Create an anchor to allow ARCore to track the hitpoint as understanding of
                                     // the physical world evolves.
                                     var anchor = hit.Trackable.CreateAnchor(hit.Pose);
+                                    anchor.gameObject.tag = "Anchor";
 
                                     // Make game object a child of the anchor.
-                                    gameObject.transform.parent = anchor.transform;
+                                    // gameObject.transform.parent = anchor.transform;
+
                                     //Activate UI
                                     DrawButton.gameObject.SetActive(true);
-                                    ResetButton.gameObject.SetActive(true);
+                                    // ResetButton.gameObject.SetActive(true);
+
                                     //Deactivate indicator
                                     indicatorTransform.gameObject.SetActive(false);
                                     isInstantiated = true;
+
+                                    //Load scene
+                                    var sceneLoader = SceneLoader.GetComponent<SceneLoader>();
+                                    sceneLoader.LoadScene("Game");
                                 }
                             }
                         }

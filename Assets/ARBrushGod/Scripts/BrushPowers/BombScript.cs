@@ -20,8 +20,8 @@ namespace BrushGestures
         public void SpawnBomb()
         {
             countdown = delay;
-            dummy = GameObject.FindGameObjectWithTag("Dummy");
-            dummyScript = dummy.GetComponent<DummyScript>();
+            // dummy = GameObject.FindGameObjectWithTag("Dummy");
+            // dummyScript = dummy.GetComponent<DummyScript>();
             brushPowers = GetComponent<BrushPowers>();
             power = Instantiate(Bomb, GameObject.Find("Circle").transform.position, GameObject.Find("Circle").transform.rotation);
             power.transform.parent = GameObject.Find("Anchor").transform;

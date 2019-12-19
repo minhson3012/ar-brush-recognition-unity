@@ -23,14 +23,14 @@ namespace BrushGestures
 
         private void CheckForHit()
         {
-            dummy = GameObject.FindGameObjectWithTag("Dummy");
-            dummyScript = dummy.GetComponent<DummyScript>();
+            // dummy = GameObject.FindGameObjectWithTag("Dummy");
+            // dummyScript = dummy.GetComponent<DummyScript>();
             float distance = Vector3.Distance(power.transform.position, dummy.transform.position);
             Debug.Log("Distance: " + distance);
-            if(distance <= 0.1f)
-            {
-                dummyScript.setShocked();
-            }
+            // if(distance <= 0.1f)
+            // {
+                // dummyScript.setShocked();
+            // }
         }
     }
 }

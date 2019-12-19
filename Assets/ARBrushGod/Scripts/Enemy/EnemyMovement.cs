@@ -21,7 +21,7 @@ public class EnemyMovement : MonoBehaviour
     void Update ()
     {
         // If the enemy and the goal have health left...
-        if(enemyHealth.currentHealth > 0 && goalHealth.currentHealth > 0)
+        if(enemyHealth.currentHealth > 0 && goalHealth.currentHealth > 0 && nav.enabled)
         {
             // ... set the destination of the nav mesh agent to the goal.
             nav.SetDestination (goal.position);

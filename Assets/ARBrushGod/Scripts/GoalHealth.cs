@@ -7,10 +7,13 @@ public class GoalHealth : MonoBehaviour
     public float currentHealth;
     public Image healthBar;
     bool isDead;
+    Canvas healthCanvas;
 
     void Awake()
     {
         currentHealth = startingHealth;
+        healthCanvas = GetComponentInChildren<Canvas>();
+        healthCanvas.worldCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
 
     public void TakeDamage(float amount)
