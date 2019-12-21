@@ -18,20 +18,21 @@ namespace BrushGestures
         public Button CancelButton;
         public GameObject PowerText;
         //Is power active?
-        private bool powerActive = false;
+        bool powerActive = false;
         //Radius circle
-        private GameObject circleRadius;
+        GameObject circleRadius;
         //Radius circle line color
-        private Color lineColor;
+        Color lineColor;
         //Gesture recognizer
-        private GestureScript gesture;
+        GestureScript gesture;
         //Thunder script
-        private ThunderScript thunderScript;
-        private BombScript bombScript;
-        private RainScript rainScript;
-        private TreeScript treeScript;
-        private FireScript fireScript;
-        private WindScript windScript;
+        ThunderScript thunderScript;
+        BombScript bombScript;
+        RainScript rainScript;
+        TreeScript treeScript;
+        FireScript fireScript;
+        WindScript windScript;
+        float currentRadius;
 
         void Start()
         {
@@ -56,39 +57,27 @@ namespace BrushGestures
                 switch (power)
                 {
                     case "thunder":
-                        lineColor = Color.yellow;
-                        circleRadius.GetComponentInChildren<TextMesh>().text = "Thunder";
-                        circleRadius.GetComponentInChildren<TextMesh>().color = Color.yellow;
+                        SetCircle("THUNDER", thunderScript.radius, Color.yellow);
                         AcceptButton.onClick.AddListener(thunderScript.SpawnThunder);
                         return;
                     case "wind":
-                        lineColor = Color.cyan;
-                        circleRadius.GetComponentInChildren<TextMesh>().text = "Wind";
-                        circleRadius.GetComponentInChildren<TextMesh>().color = Color.cyan;
+                        SetCircle("Wind", windScript.radius, Color.cyan);
                         AcceptButton.onClick.AddListener(windScript.SpawnWind);
                         return;
                     case "null":
-                        lineColor = Color.white;
-                        circleRadius.GetComponentInChildren<TextMesh>().text = "Bomb";
-                        circleRadius.GetComponentInChildren<TextMesh>().color = Color.white;
+                        SetCircle("BOMB", bombScript.radius, Color.white);
                         AcceptButton.onClick.AddListener(bombScript.SpawnBomb);
                         return;
                     case "rain":
-                        lineColor = Color.blue;
-                        circleRadius.GetComponentInChildren<TextMesh>().text = "Rain";
-                        circleRadius.GetComponentInChildren<TextMesh>().color = Color.blue;
+                        SetCircle("RAIN", rainScript.radius, Color.blue);
                         AcceptButton.onClick.AddListener(rainScript.SpawnRain);
                         return;
                     case "tree":
-                        lineColor = Color.green;
-                        circleRadius.GetComponentInChildren<TextMesh>().text = "Tree";
-                        circleRadius.GetComponentInChildren<TextMesh>().color = Color.green;
+                        SetCircle("TREE", treeScript.radius, Color.green);
                         AcceptButton.onClick.AddListener(treeScript.SpawnTree);
                         return;
                     case "fire":
-                        lineColor = Color.red;
-                        circleRadius.GetComponentInChildren<TextMesh>().text = "Fire";
-                        circleRadius.GetComponentInChildren<TextMesh>().color = Color.red;
+                        SetCircle("FIRE", fireScript.radius, Color.red);
                         AcceptButton.onClick.AddListener(fireScript.SpawnFire);
                         return;
                 }
@@ -101,9 +90,16 @@ namespace BrushGestures
                 UpdatePowerIndicator();
         }
 
-        /// <summary>
-        /// Spawn a circle radius following the reticle
-        /// </summary>
+        //Set up circle
+        void SetCircle(string powerText, float radius, Color powerColor)
+        {
+            lineColor = powerColor;
+            circleRadius.GetComponentInChildren<TextMesh>().text = powerText;
+            circleRadius.GetComponentInChildren<TextMesh>().color = powerColor;
+            currentRadius = radius;
+        }
+
+        // Spawn a circle radius following the reticle
         void UpdatePowerIndicator()
         {
             TrackableHit hit;
@@ -123,10 +119,10 @@ namespace BrushGestures
                 }
                 else
                 {
-                    circleRadius.transform.parent = GameObject.Find("Anchor").transform;
+                    circleRadius.transform.parent = GameObject.FindGameObjectWithTag("Anchor").transform;
                     circleRadius.transform.position = new Vector3(hit.Pose.position.x, hit.Pose.position.y, hit.Pose.position.z);
                     circleRadius.transform.rotation = hit.Pose.rotation;
-                    circleRadius.DrawCircle(0.1f, 0.01f, lineColor);
+                    circleRadius.DrawCircle(currentRadius, 0.01f, lineColor);
                 }
             }
         }
@@ -152,7 +148,7 @@ namespace BrushGestures
         }
 
         //Destroy circle radius
-        private void DestroyCircle()
+        void DestroyCircle()
         {
             // if (circleRadius.GetComponent<Renderer>())
             // {
@@ -161,7 +157,7 @@ namespace BrushGestures
             Destroy(circleRadius);
         }
 
-        private void SpawnCircle()
+        void SpawnCircle()
         {
             circleRadius = new GameObject { name = "Circle" };
             var textObject = Instantiate(PowerText, new Vector3(circleRadius.transform.position.x, circleRadius.transform.position.y, circleRadius.transform.position.x - 0.15f),

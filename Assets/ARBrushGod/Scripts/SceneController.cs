@@ -31,6 +31,7 @@
         public GameObject SceneLoader;
         public Button DrawButton;
         public Button ResetButton;
+        public GameObject InkUI;
         /// <summary>
         /// True if the app is in the process of quitting due to an ARCore connection error,
         /// otherwise false.
@@ -103,6 +104,7 @@
 
                                     //Activate UI
                                     DrawButton.gameObject.SetActive(true);
+                                    InkUI.gameObject.SetActive(true);
                                     // ResetButton.gameObject.SetActive(true);
 
                                     //Deactivate indicator
@@ -112,6 +114,10 @@
                                     //Load scene
                                     var sceneLoader = SceneLoader.GetComponent<SceneLoader>();
                                     sceneLoader.LoadScene("Game");
+
+                                    //Disable Point Cloud and Plane Generator
+                                    GameObject.FindGameObjectWithTag("PointCloud").SetActive(false);
+                                    GameObject.FindGameObjectWithTag("PlaneGenerator").SetActive(false);
                                 }
                             }
                         }

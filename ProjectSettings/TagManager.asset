@@ -11,9 +11,13 @@ TagManager:
   - FxTemporaire
   - Goal
   - DontDestroy
-  - Blue
   - Plane
   - Anchor
+  - PointCloud
+  - Enemy
+  - PlaneGenerator
+  - InkUI
+  - InkInnerUI
   layers:
   - Default
   - TransparentFX
@@ -23,7 +27,7 @@ TagManager:
   - UI
   - 
   - 
-  - PostProcessing
+  - Plane
   - 
   - 
   - 
