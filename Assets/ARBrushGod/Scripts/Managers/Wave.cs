@@ -6,6 +6,16 @@ using UnityEngine;
 public class Wave
 {
     public EnemySpawn[] enemies;
+
+    public int GetTotalEnemies()
+    {
+        int numOfEnemies = 0;
+        foreach(EnemySpawn e in enemies)
+        {
+            numOfEnemies += e.enemyCount;
+        }
+        return numOfEnemies;
+    }
 }
 
 [System.Serializable]

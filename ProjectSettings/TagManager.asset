@@ -18,6 +18,8 @@ TagManager:
   - PlaneGenerator
   - InkUI
   - InkInnerUI
+  - ARCore Device
+  - Circle
   layers:
   - Default
   - TransparentFX

@@ -15,6 +15,7 @@ public class EnemyMovement : MonoBehaviour
     Vector3 direction;
     float currentMoveTime;
     float t = 0f;
+    bool isSlowed;
 
     void Start()
     {
@@ -25,6 +26,7 @@ public class EnemyMovement : MonoBehaviour
         enemyAttack = GetComponent<EnemyAttack>();
         currentMoveTime = moveTime;
         StartCoroutine(MoveToPosition(transform, goal.position, currentMoveTime));
+        isSlowed = false;
     }
 
 
@@ -51,12 +53,20 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void SetMoveTime(float multiplier)
+    public void SetMoveTime(float multiplier, float duration)
     {
-        if (multiplier == 0f)
+        if (!isSlowed)
         {
-            currentMoveTime = moveTime;
+            currentMoveTime = currentMoveTime * multiplier;
+            isSlowed = true;
+            StartCoroutine(ResetMoveTime(duration));
         }
-        else currentMoveTime *= multiplier;
+    }
+
+    IEnumerator ResetMoveTime(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        currentMoveTime = moveTime;
+        isSlowed = false;
     }
 }

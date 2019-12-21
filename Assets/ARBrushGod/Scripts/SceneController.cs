@@ -58,6 +58,11 @@
         public void Update()
         {
             _UpdateApplicationLifecycle();
+            DisplayGameScene();
+        }
+
+        public void DisplayGameScene()
+        {
             TrackableHit hit;
             TrackableHitFlags raycastFilter = TrackableHitFlags.PlaneWithinPolygon |
                 TrackableHitFlags.FeaturePointWithSurfaceNormal;
@@ -125,6 +130,7 @@
                 }
             }
         }
+
         public void UpdateIndicator(Vector3 position, Quaternion rotation)
         {
             if (Session.Status == SessionStatus.Tracking)

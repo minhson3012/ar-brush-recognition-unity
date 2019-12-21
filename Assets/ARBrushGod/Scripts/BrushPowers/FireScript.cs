@@ -6,6 +6,7 @@ namespace BrushGestures
     {
         public GameObject Fire;
         public float radius = 0.1f;
+        public float inkCost = 2f;
         private GameObject power;
         private BrushPowers brushPowers;
         // private GameObject dummy;
@@ -15,9 +16,10 @@ namespace BrushGestures
         public void SpawnFire()
         {
             brushPowers = GetComponent<BrushPowers>();
-            power = Instantiate(Fire, GameObject.Find("Circle").transform.position, GameObject.Find("Circle").transform.rotation);
-            power.transform.parent = GameObject.Find("Anchor").transform;
+            power = Instantiate(Fire, GameObject.FindGameObjectWithTag("Circle").transform.position, GameObject.FindGameObjectWithTag("Circle").transform.rotation);
+            power.transform.parent = GameObject.FindGameObjectWithTag("Anchor").transform;
             brushPowers.CleanupUI();
+            transform.GetComponent<InkScript>().ReduceInk(inkCost);
             CheckForHit();
             Destroy(power, 2);
         }

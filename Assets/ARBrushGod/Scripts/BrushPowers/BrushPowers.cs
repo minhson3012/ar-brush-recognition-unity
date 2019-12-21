@@ -32,6 +32,7 @@ namespace BrushGestures
         TreeScript treeScript;
         FireScript fireScript;
         WindScript windScript;
+        InkScript inkScript;
         float currentRadius;
 
         void Start()
@@ -43,6 +44,7 @@ namespace BrushGestures
             treeScript = GetComponent<TreeScript>();
             fireScript = GetComponent<FireScript>();
             windScript = GetComponent<WindScript>();
+            inkScript = GetComponent<InkScript>();
         }
         public void InvokePower(string power)
         {
@@ -57,28 +59,52 @@ namespace BrushGestures
                 switch (power)
                 {
                     case "thunder":
-                        SetCircle("THUNDER", thunderScript.radius, Color.yellow);
-                        AcceptButton.onClick.AddListener(thunderScript.SpawnThunder);
+                        if (CheckForRemainingInk(thunderScript.inkCost))
+                        {
+                            SetCircle("THUNDER", thunderScript.radius, Color.yellow);
+                            AcceptButton.onClick.AddListener(thunderScript.SpawnThunder);
+                        }
+                        else CleanupUI();
                         return;
                     case "wind":
-                        SetCircle("Wind", windScript.radius, Color.cyan);
-                        AcceptButton.onClick.AddListener(windScript.SpawnWind);
+                        if (CheckForRemainingInk(windScript.inkCost))
+                        {
+                            SetCircle("WIND", windScript.radius, Color.cyan);
+                            AcceptButton.onClick.AddListener(windScript.SpawnWind);
+                        }
+                        else CleanupUI();
                         return;
                     case "null":
-                        SetCircle("BOMB", bombScript.radius, Color.white);
-                        AcceptButton.onClick.AddListener(bombScript.SpawnBomb);
+                        if (CheckForRemainingInk(bombScript.inkCost))
+                        {
+                            SetCircle("BOMB", bombScript.radius, Color.white);
+                            AcceptButton.onClick.AddListener(bombScript.SpawnBomb);
+                        }
+                        else CleanupUI();
                         return;
                     case "rain":
-                        SetCircle("RAIN", rainScript.radius, Color.blue);
-                        AcceptButton.onClick.AddListener(rainScript.SpawnRain);
+                        if (CheckForRemainingInk(rainScript.inkCost))
+                        {
+                            SetCircle("RAIN", rainScript.radius, Color.blue);
+                            AcceptButton.onClick.AddListener(rainScript.SpawnRain);
+                        }
+                        else CleanupUI();
                         return;
                     case "tree":
-                        SetCircle("TREE", treeScript.radius, Color.green);
-                        AcceptButton.onClick.AddListener(treeScript.SpawnTree);
+                        if (CheckForRemainingInk(treeScript.inkCost))
+                        {
+                            SetCircle("TREE", treeScript.radius, Color.green);
+                            AcceptButton.onClick.AddListener(treeScript.SpawnTree);
+                        }
+                        else CleanupUI();
                         return;
                     case "fire":
-                        SetCircle("FIRE", fireScript.radius, Color.red);
-                        AcceptButton.onClick.AddListener(fireScript.SpawnFire);
+                        if (CheckForRemainingInk(fireScript.inkCost))
+                        {
+                            SetCircle("FIRE", fireScript.radius, Color.red);
+                            AcceptButton.onClick.AddListener(fireScript.SpawnFire);
+                        }
+                        else CleanupUI();
                         return;
                 }
             }
@@ -150,16 +176,12 @@ namespace BrushGestures
         //Destroy circle radius
         void DestroyCircle()
         {
-            // if (circleRadius.GetComponent<Renderer>())
-            // {
-            //     Destroy(circleRadius.GetComponent<Renderer>().material);
-            // }
             Destroy(circleRadius);
         }
 
         void SpawnCircle()
         {
-            circleRadius = new GameObject { name = "Circle" };
+            circleRadius = new GameObject { name = "Circle", tag = "Circle" };
             var textObject = Instantiate(PowerText, new Vector3(circleRadius.transform.position.x, circleRadius.transform.position.y, circleRadius.transform.position.x - 0.15f),
                                          PowerText.transform.rotation);
             textObject.transform.parent = circleRadius.transform;
@@ -175,13 +197,10 @@ namespace BrushGestures
             gesture.DestroyLines();
         }
 
-        //When player clicks the Cancel button
-        // public void OnCancelButtonClick()
-        // {
-        //     Debug.Log("Cancelled");
-        //     HidePowerUI();
-        //     DestroyCircle();
-        //     gesture.DestroyLines();
-        // }
+        bool CheckForRemainingInk(float inkAmount)
+        {
+            if (inkScript.currentInk < inkAmount) return false;
+            return true;
+        }
     }
 }

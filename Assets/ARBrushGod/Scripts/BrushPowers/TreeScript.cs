@@ -11,6 +11,7 @@ namespace BrushGestures
         public float radius = 0.1f;
         public float speed = 0.5f;
         public float duration = 1.5f;
+        public float inkCost = 3f;
         GameObject power;
         BrushPowers brushPowers;
         GameObject circle;
@@ -21,10 +22,11 @@ namespace BrushGestures
         public void SpawnTree()
         {
             brushPowers = GetComponent<BrushPowers>();
-            circle = GameObject.Find("Circle");
+            circle = GameObject.FindGameObjectWithTag("Circle");
             Vector3 position = new Vector3(circle.transform.position.x, circle.transform.position.y, circle.transform.position.z);
             power = Instantiate(Tree, position, Tree.transform.rotation);
-            power.transform.parent = GameObject.Find("Anchor").transform;
+            power.transform.parent = GameObject.FindGameObjectWithTag("Anchor").transform;
+            transform.GetComponent<InkScript>().ReduceInk(inkCost);
             brushPowers.CleanupUI();
             Destroy(power, 5);
         }
@@ -36,7 +38,7 @@ namespace BrushGestures
                 power.transform.localScale = Vector3.Lerp(minScale, maxScale, lerpTime);
                 lerpTime += Time.deltaTime * speed;
             }
-            else if(!power) lerpTime = 0f;
+            else if (!power) lerpTime = 0f;
         }
     }
 }

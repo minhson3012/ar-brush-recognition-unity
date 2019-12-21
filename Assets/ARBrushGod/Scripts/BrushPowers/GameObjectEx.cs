@@ -9,7 +9,6 @@ public static class GameObjectEx
         LineRenderer line = container.GetComponent<LineRenderer>();
         if (line == null)
         {
-            Debug.Log("IM GOING IN");
             line = container.AddComponent<LineRenderer>();
             line.useWorldSpace = false;
             line.startWidth = lineWidth;

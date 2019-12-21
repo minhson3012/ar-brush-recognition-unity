@@ -6,6 +6,7 @@ namespace BrushGestures
     {
         public GameObject Thunder;
         public float radius = 0.1f;
+        public float inkCost = 2f;
         private GameObject power;
         private BrushPowers brushPowers;
         // private GameObject dummy;
@@ -14,11 +15,21 @@ namespace BrushGestures
 
         public void SpawnThunder()
         {
+            //Instantiate power
             brushPowers = GetComponent<BrushPowers>();
-            power = Instantiate(Thunder, GameObject.Find("Circle").transform.position, GameObject.Find("Circle").transform.rotation);
-            power.transform.parent = GameObject.Find("Anchor").transform;
+            power = Instantiate(Thunder, GameObject.FindGameObjectWithTag("Circle").transform.position, GameObject.FindGameObjectWithTag("Circle").transform.rotation);
+            power.transform.parent = GameObject.FindGameObjectWithTag("Anchor").transform;
+
+            //Reduce ink amount
+            GetComponent<InkScript>().ReduceInk(inkCost);
+
+            //Cleanup UI
             brushPowers.CleanupUI();
+
+            //Check for hits
             CheckForHit();
+
+            //Destroy prefab
             Destroy(power, 2);
         }
 

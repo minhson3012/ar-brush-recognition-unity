@@ -133,7 +133,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1772147192650458, guid: c10877f7cd5764de18d46d7b777d1faa, type: 3}
       propertyPath: m_TagString
-      value: DontDestroy
+      value: ARCore Device
       objectReference: {fileID: 0}
     - target: {fileID: 4442908887562770, guid: c10877f7cd5764de18d46d7b777d1faa, type: 3}
       propertyPath: m_LocalPosition.x
@@ -490,7 +490,7 @@ PrefabInstance:
     - target: {fileID: 444032563837628147, guid: c0bd3e51e298d4547bf136160bc964ea,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -76
+      value: -158
       objectReference: {fileID: 0}
     - target: {fileID: 444032563837628147, guid: c0bd3e51e298d4547bf136160bc964ea,
         type: 3}
@@ -551,6 +551,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 893561665821566988, guid: c0bd3e51e298d4547bf136160bc964ea,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 893561666352143987, guid: c0bd3e51e298d4547bf136160bc964ea,
         type: 3}
@@ -732,6 +737,16 @@ PrefabInstance:
       propertyPath: sceneController
       value: 
       objectReference: {fileID: 1675520128}
+    - target: {fileID: 3616752799095391407, guid: c0bd3e51e298d4547bf136160bc964ea,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3616752799269095723, guid: c0bd3e51e298d4547bf136160bc964ea,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3877424890225074093, guid: c0bd3e51e298d4547bf136160bc964ea,
         type: 3}
       propertyPath: m_FillAmount

@@ -11,6 +11,7 @@ namespace BrushGestures
         public GameObject explosionEffect;
         public float radius = 0.1f;
         public float force = 500f;
+        public float inkCost = 4f;
         GameObject power;
         BrushPowers brushPowers;
         GameObject dummy;
@@ -20,11 +21,10 @@ namespace BrushGestures
         public void SpawnBomb()
         {
             countdown = delay;
-            // dummy = GameObject.FindGameObjectWithTag("Dummy");
-            // dummyScript = dummy.GetComponent<DummyScript>();
             brushPowers = GetComponent<BrushPowers>();
-            power = Instantiate(Bomb, GameObject.Find("Circle").transform.position, GameObject.Find("Circle").transform.rotation);
-            power.transform.parent = GameObject.Find("Anchor").transform;
+            power = Instantiate(Bomb, GameObject.FindGameObjectWithTag("Circle").transform.position, GameObject.FindGameObjectWithTag("Circle").transform.rotation);
+            power.transform.parent = GameObject.FindGameObjectWithTag("Anchor").transform;
+            transform.GetComponent<InkScript>().ReduceInk(inkCost);
             brushPowers.CleanupUI();
             isSpawned = true;
         }
