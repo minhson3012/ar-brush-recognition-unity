@@ -44,6 +44,9 @@ public class EnemyHealth : MonoBehaviour
     {
         isDead = true;
         animator.SetTrigger("Dead");
+
+        //Tell EnemyManager that an enemy is dead
+        GameObject.FindGameObjectWithTag("EnemyManager").GetComponent<EnemyManager>().EnemyDead();
     }
 
     public void StartSinking()

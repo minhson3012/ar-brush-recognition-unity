@@ -20,6 +20,7 @@ TagManager:
   - InkInnerUI
   - ARCore Device
   - Circle
+  - EnemyManager
   layers:
   - Default
   - TransparentFX

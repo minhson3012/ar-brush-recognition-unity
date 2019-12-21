@@ -60,7 +60,7 @@ namespace BrushGestures
                 {
                     //Heavily slow every enemy for 5 seconds
                     EnemyMovement em = e.GetComponent<EnemyMovement>();
-                    em.SetMoveTime(2.5f, 3f);
+                    em.SetMoveTime(5f, 3f);
                 }
             }
         }

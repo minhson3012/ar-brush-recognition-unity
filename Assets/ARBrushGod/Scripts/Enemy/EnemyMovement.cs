@@ -37,8 +37,14 @@ public class EnemyMovement : MonoBehaviour
             direction = (goal.position - transform.position).normalized;
             lookRotation = Quaternion.LookRotation(direction);
             transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationTime);
+
+            if(transform.position.y != goal.position.y)
+            {
+                Vector3 newPosition = new Vector3(transform.position.x, goal.position.y, transform.position.z);
+                transform.position = newPosition;
+            }
         }
-        else SetMoveTime(100f);
+        else SetMoveTime(100f, 2f);
     }
 
     public IEnumerator MoveToPosition(Transform transform, Vector3 position, float moveTime)

@@ -8,10 +8,12 @@ public class EnemyManager : MonoBehaviour
     public float spawnTime = 3f;            // How long between each spawn.
     public Transform spawnPointPrefab;
     public Wave[] wave;
+    public int currentWave;
+    int currentNumOfEnemies;
     Transform[] spawnPoints = new Transform[8]; // An array of the spawn points this enemy can spawn from.
-    int currentWave;
     int numOfWave;
     int lastIndex;
+    public bool gameStarted;
 
     void Start()
     {
@@ -23,13 +25,24 @@ public class EnemyManager : MonoBehaviour
         }
 
         // Call the Spawn function after a delay of the spawnTime and then continue to call after the same amount of time.
-        InvokeRepeating("Spawn", spawnTime, spawnTime);
+        // InvokeRepeating("Spawn", spawnTime, spawnTime);
 
         //Set current wave and num of wave
         currentWave = 0;
         numOfWave = wave.Length;
+        gameStarted = false;
+        currentNumOfEnemies = GetTotalNumOfEnemies(currentWave);
     }
 
+    void Update()
+    {
+        if(gameStarted)
+        {
+            //Game has started
+            InvokeRepeating("Spawn", 0, spawnTime);
+            gameStarted = false;
+        }
+    }
 
     void Spawn()
     {
@@ -61,5 +74,20 @@ public class EnemyManager : MonoBehaviour
             gameObject.transform.localScale *= 0.6f;
             enemyToSpawn.enemyCount--;
         }
+    }
+
+    public int GetTotalNumOfEnemies(int waveIndex)
+    {
+        return wave[waveIndex].GetTotalEnemies();
+    }
+
+    public void EnemyDead()
+    {
+        currentNumOfEnemies--;
+    }
+
+    public int GetCurrentNumOfEnemies()
+    {
+        return currentNumOfEnemies;
     }
 }
