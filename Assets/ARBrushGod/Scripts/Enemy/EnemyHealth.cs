@@ -5,7 +5,6 @@ public class EnemyHealth : MonoBehaviour
 {
     public float startingHealth;
     public float currentHealth;
-    public float moveSpeed;
     public int attackDamage;
     public Image healthBar;
     public float sinkSpeed = 0.1f;
@@ -18,11 +17,12 @@ public class EnemyHealth : MonoBehaviour
         currentHealth = startingHealth;
         animator = GetComponent<Animator>();
         healthCanvas = GetComponentInChildren<Canvas>();
-        healthCanvas.worldCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        healthCanvas.worldCamera = Camera.main.GetComponent<Camera>();
     }
 
     void Update()
     {
+        healthCanvas.transform.LookAt(Camera.main.transform);
         if (isSinking)
         {
             transform.Translate(-Vector3.up * sinkSpeed * Time.deltaTime);
@@ -48,7 +48,7 @@ public class EnemyHealth : MonoBehaviour
 
     public void StartSinking()
     {
-        GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
+        // GetComponent<UnityEngine.AI.NavMeshAgent>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
         isSinking = true;
         Destroy(gameObject, 2f);

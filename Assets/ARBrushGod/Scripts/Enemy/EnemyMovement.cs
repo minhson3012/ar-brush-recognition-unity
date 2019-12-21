@@ -1,36 +1,62 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using System.Collections;
 public class EnemyMovement : MonoBehaviour
 {
+    public float rotationTime = 1f;
+    public float moveTime = 10f;
     Transform goal;               // Reference to the goal's position.
     GoalHealth goalHealth;      // Reference to the goal's health.
     EnemyHealth enemyHealth;        // Reference to this enemy's health.
-    NavMeshAgent nav;               // Reference to the nav mesh agent.
+    EnemyAttack enemyAttack;
+    // NavMeshAgent nav;               // Reference to the nav mesh agent.
 
+    Quaternion lookRotation;
+    Vector3 direction;
+    float currentMoveTime;
+    float t = 0f;
 
-    void Awake ()
+    void Start()
     {
         // Set up the references.
-        goal = GameObject.FindGameObjectWithTag ("Goal").transform;
+        goal = GameObject.FindGameObjectWithTag("Goal").transform;
         goalHealth = goal.GetComponent<GoalHealth>();
-        enemyHealth = GetComponent <EnemyHealth> ();
-        nav = GetComponent<NavMeshAgent>();
+        enemyHealth = GetComponent<EnemyHealth>();
+        enemyAttack = GetComponent<EnemyAttack>();
+        currentMoveTime = moveTime;
+        StartCoroutine(MoveToPosition(transform, goal.position, currentMoveTime));
     }
 
 
-    void Update ()
+    void Update()
     {
-        // If the enemy and the goal have health left...
-        if(enemyHealth.currentHealth > 0 && goalHealth.currentHealth > 0 && nav.enabled)
+        if (enemyHealth.currentHealth > 0 && goalHealth.currentHealth > 0)
         {
-            // ... set the destination of the nav mesh agent to the goal.
-            nav.SetDestination (goal.position);
+            direction = (goal.position - transform.position).normalized;
+            lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationTime);
         }
-        // Otherwise...
-        else
+        else SetMoveTime(100f);
+    }
+
+    public IEnumerator MoveToPosition(Transform transform, Vector3 position, float moveTime)
+    {
+        var currentPos = transform.position;
+        t = 0f;
+        while (t < 1 && !enemyAttack.goalInRange)
         {
-            // ... disable the nav mesh agent.
-            nav.enabled = false;
+            t += Time.deltaTime / currentMoveTime;
+            transform.position = Vector3.Lerp(currentPos, position, t);
+            yield return null;
         }
-    } 
+    }
+
+    public void SetMoveTime(float multiplier)
+    {
+        if (multiplier == 0f)
+        {
+            currentMoveTime = moveTime;
+        }
+        else currentMoveTime *= multiplier;
+    }
 }

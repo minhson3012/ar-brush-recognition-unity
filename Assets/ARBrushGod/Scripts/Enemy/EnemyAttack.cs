@@ -11,7 +11,7 @@ public class EnemyAttack : MonoBehaviour
     GameObject goal;
     GoalHealth goalHealth;
     EnemyHealth enemyHealth;
-    bool goalInRange;
+    public bool goalInRange = false;
     bool hasAttacked;
     float timer;
 

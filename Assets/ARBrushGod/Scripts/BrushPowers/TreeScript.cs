@@ -8,6 +8,7 @@ namespace BrushGestures
     public class TreeScript : MonoBehaviour
     {
         public GameObject Tree;
+        public float radius = 0.1f;
         public float speed = 0.5f;
         public float duration = 1.5f;
         GameObject power;

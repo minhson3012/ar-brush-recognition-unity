@@ -5,6 +5,7 @@ namespace BrushGestures
     public class RainScript : MonoBehaviour
     {
         public GameObject Rain;
+        public float radius = 0.5f;
         GameObject power;
         BrushPowers brushPowers;
         GameObject circle;

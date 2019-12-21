@@ -4,7 +4,7 @@ using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour
 {
-    public NavMeshSurface surface;
+    // public NavMeshSurface surface;
     public GameObject playZone;
     List<GameObject> items = new List<GameObject>();
     GameObject anchor;
@@ -18,8 +18,5 @@ public class GameManager : MonoBehaviour
         playZone.transform.parent = anchor.transform;
         playZone.transform.position = anchor.transform.position;
         playZone.transform.rotation = anchor.transform.rotation;
-
-        //Bake Navmesh
-        surface.BuildNavMesh();
     }
 }

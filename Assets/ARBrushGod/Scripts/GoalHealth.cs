@@ -13,7 +13,12 @@ public class GoalHealth : MonoBehaviour
     {
         currentHealth = startingHealth;
         healthCanvas = GetComponentInChildren<Canvas>();
-        healthCanvas.worldCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        healthCanvas.worldCamera = Camera.main.GetComponent<Camera>();
+    }
+
+    void Update()
+    {
+        healthCanvas.transform.LookAt(Camera.main.transform);
     }
 
     public void TakeDamage(float amount)

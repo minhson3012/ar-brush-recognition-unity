@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2385492106323810116}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManRightHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4154145333702796156}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManLeftForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8878060171524952604}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManRightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,7 +103,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6898504991165634369}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManRightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,7 +134,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1032457820268136734}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManRightForeArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -165,7 +165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5819784935969875328}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManLeftUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +196,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2849037008590322581}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManSkeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,7 +227,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2554597120137790593}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManLeftLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,7 +258,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5310587978926574395}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManSpine1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,7 +289,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3330761439631150688}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManLeftHandMiddle2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -319,7 +319,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2003452634121737220}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManLeftToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,7 +349,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 579247351132539263}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManLeftHand
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -388,7 +388,7 @@ GameObject:
   - component: {fileID: -7183442577686991489}
   - component: {fileID: 3403945354429579750}
   - component: {fileID: 1092120933450656334}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Green
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -460,6 +460,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 1
+  moveSpeed: 10
 --- !u!114 &-818422737659659242
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -472,10 +473,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e4c64a06c3d1c42a77c56bc69555ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 0
+  startingHealth: 100
   currentHealth: 0
-  moveSpeed: 0
-  attackDamage: 0
+  attackDamage: 10
   healthBar: {fileID: 5710658126069108142}
   sinkSpeed: 0.1
 --- !u!114 &-7183442577686991489
@@ -491,7 +491,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBetweenAttacks: 1.5
-  attackDamage: 0
+  attackDamage: 10
   goalInRange: 0
 --- !u!135 &3403945354429579750
 SphereCollider:
@@ -501,7 +501,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2804530131606057310}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.89725864
@@ -529,7 +529,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2065838433825710360}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManNeck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -560,7 +560,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8020530157701400267}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManHips
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -593,7 +593,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5282096409511441539}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManLeftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -624,7 +624,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8501400145417546391}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManSpine2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -657,7 +657,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1920101536566705331}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManLeftArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -688,7 +688,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6900239432663094047}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManRightUpLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -719,7 +719,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5446361846462487749}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManLeftHandMiddle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -750,7 +750,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4105742038896473997}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManLeftShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -781,7 +781,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4737942375145665202}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManRightHandThumb1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -811,7 +811,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7436489303921260994}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManRightHandMiddle2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -841,7 +841,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6169465546581098962}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManSpine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -873,7 +873,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7209400595722156409}
   - component: {fileID: 3935738676206757626}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowMan
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -981,7 +981,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5115244370242865505}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManRightShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1012,7 +1012,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5424635503265271085}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManRightLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1043,7 +1043,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8169584179053207499}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManRightHandMiddle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1074,7 +1074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1781638774471507818}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManLeftHandThumb1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1104,7 +1104,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6983037427684574882}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManRightToeBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1134,7 +1134,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8391214101454133443}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: LowManHead
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1162,10 +1162,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1202716820173538125}
     m_Modifications:
+    - target: {fileID: 414358535082477472, guid: 110014a08c1bf5a4cad02bd1c2db2646,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1363215725361347996, guid: 110014a08c1bf5a4cad02bd1c2db2646,
         type: 3}
       propertyPath: m_Name
       value: EnemyHealthCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 1363215725361347996, guid: 110014a08c1bf5a4cad02bd1c2db2646,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5700188438655556600, guid: 110014a08c1bf5a4cad02bd1c2db2646,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6427447665451460003, guid: 110014a08c1bf5a4cad02bd1c2db2646,
         type: 3}

@@ -1,15 +1,16 @@
 using UnityEngine;
 
-namespace BrushGestures 
+namespace BrushGestures
 {
-    public class ThunderScript: MonoBehaviour
+    public class ThunderScript : MonoBehaviour
     {
         public GameObject Thunder;
+        public float radius = 0.1f;
         private GameObject power;
         private BrushPowers brushPowers;
-        private GameObject dummy;
-        private DummyScript dummyScript;
-        
+        // private GameObject dummy;
+        // private DummyScript dummyScript;
+
 
         public void SpawnThunder()
         {
@@ -25,12 +26,15 @@ namespace BrushGestures
         {
             // dummy = GameObject.FindGameObjectWithTag("Dummy");
             // dummyScript = dummy.GetComponent<DummyScript>();
-            float distance = Vector3.Distance(power.transform.position, dummy.transform.position);
-            Debug.Log("Distance: " + distance);
-            // if(distance <= 0.1f)
-            // {
-                // dummyScript.setShocked();
-            // }
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject e in enemies)
+            {
+                float distance = Vector3.Distance(power.transform.position, e.transform.position);
+                if(distance <= radius)
+                {
+                    e.GetComponent<EnemyHealth>().TakeDamage(100f);
+                }
+            }
         }
     }
 }

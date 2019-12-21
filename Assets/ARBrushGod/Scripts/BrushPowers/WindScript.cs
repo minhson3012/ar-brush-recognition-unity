@@ -5,6 +5,7 @@ namespace BrushGestures
     public class WindScript : MonoBehaviour
     {
         public GameObject Wind;
+        public float radius = 0.5f;
         GameObject power;
         BrushPowers brushPowers;
         GameObject circle;

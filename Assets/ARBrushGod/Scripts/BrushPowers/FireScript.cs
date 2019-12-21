@@ -1,15 +1,16 @@
 using UnityEngine;
 
-namespace BrushGestures 
+namespace BrushGestures
 {
-    public class FireScript: MonoBehaviour
+    public class FireScript : MonoBehaviour
     {
         public GameObject Fire;
+        public float radius = 0.1f;
         private GameObject power;
         private BrushPowers brushPowers;
-        private GameObject dummy;
-        private DummyScript dummyScript;
-        
+        // private GameObject dummy;
+        // private DummyScript dummyScript;
+
 
         public void SpawnFire()
         {
@@ -23,13 +24,14 @@ namespace BrushGestures
 
         private void CheckForHit()
         {
-            dummy = GameObject.FindGameObjectWithTag("Dummy");
-            dummyScript = dummy.GetComponent<DummyScript>();
-            float distance = Vector3.Distance(power.transform.position, dummy.transform.position);
-            Debug.Log("Distance: " + distance);
-            if(distance <= 0.1f)
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject e in enemies)
             {
-                dummyScript.setShocked();
+                float distance = Vector3.Distance(power.transform.position, e.transform.position);
+                if (distance <= radius)
+                {
+                    e.GetComponent<EnemyHealth>().TakeDamage(100f);
+                }
             }
         }
     }

@@ -49,10 +49,11 @@ namespace BrushGestures
             foreach (Collider nearbyObject in colliders)
             {
                 Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
-                if (nearbyObject.tag.Equals("Dummy"))
+                if (nearbyObject.tag.Equals("Enemy"))
                 {
                     rb.AddExplosionForce(force, power.transform.position, radius);
-                    dummyScript.Die();
+                    // dummyScript.Die();
+                    nearbyObject.GetComponent<EnemyHealth>().TakeDamage(200);
                 }
             }
             Destroy(explosion, 2);
