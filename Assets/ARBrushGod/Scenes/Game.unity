@@ -237,6 +237,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.8
       objectReference: {fileID: 0}
+    - target: {fileID: 879265169, guid: e7923a856ca89e74b988db66f8b1c85c, type: 3}
+      propertyPath: healthBar
+      value: 
+      objectReference: {fileID: 2008136088}
     - target: {fileID: 487978565503563461, guid: e7923a856ca89e74b988db66f8b1c85c,
         type: 3}
       propertyPath: m_Name
@@ -326,6 +330,18 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 5, y: -5}
   m_UseGraphicAlpha: 1
+--- !u!114 &2008136088 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1780262642587181554, guid: e7923a856ca89e74b988db66f8b1c85c,
+    type: 3}
+  m_PrefabInstance: {fileID: 2008136084}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &418761383627570274
 PrefabInstance:
   m_ObjectHideFlags: 0
