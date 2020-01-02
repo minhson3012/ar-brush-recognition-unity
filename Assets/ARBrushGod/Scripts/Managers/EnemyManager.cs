@@ -36,7 +36,7 @@ public class EnemyManager : MonoBehaviour
 
     void Update()
     {
-        if(gameStarted)
+        if (gameStarted)
         {
             //Game has started
             InvokeRepeating("Spawn", 0, spawnTime);
@@ -74,6 +74,11 @@ public class EnemyManager : MonoBehaviour
             gameObject.transform.localScale *= 0.6f;
             enemyToSpawn.enemyCount--;
         }
+        else if (enemyCount == 0)
+        {
+            //Switch to next wave
+            NextWave();
+        }
     }
 
     public int GetTotalNumOfEnemies(int waveIndex)
@@ -89,5 +94,19 @@ public class EnemyManager : MonoBehaviour
     public int GetCurrentNumOfEnemies()
     {
         return currentNumOfEnemies;
+    }
+
+    public int GetNumOfWaves()
+    {
+        return numOfWave;
+    }
+
+    public void NextWave()
+    {
+        if (currentWave != (wave.Length - 1))
+        {
+            currentWave++;
+            currentNumOfEnemies = GetTotalNumOfEnemies(currentWave);
+        }
     }
 }

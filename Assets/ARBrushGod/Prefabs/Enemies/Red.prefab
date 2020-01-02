@@ -986,6 +986,8 @@ MonoBehaviour:
   startingHealth: 0
   currentHealth: 0
   attackDamage: 0
+  fireMultiplier: 0.3
+  thunderMultiplier: 1
   healthBar: {fileID: 560577000653623375}
   sinkSpeed: 0.1
 --- !u!114 &8900315532192238206

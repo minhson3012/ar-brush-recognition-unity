@@ -32,7 +32,7 @@ namespace BrushGestures
                 float distance = Vector3.Distance(power.transform.position, e.transform.position);
                 if (distance <= radius)
                 {
-                    e.GetComponent<EnemyHealth>().TakeDamage(100f);
+                    e.GetComponent<EnemyHealth>().TakeDamage(100f, "fire");
                 }
             }
         }

@@ -5,6 +5,8 @@ public class EnemyMovement : MonoBehaviour
 {
     public float rotationTime = 1f;
     public float moveTime = 10f;
+    public float rainMultiplier = 5f;
+    public float windMultiplier = 10f;
     Transform goal;               // Reference to the goal's position.
     GoalHealth goalHealth;      // Reference to the goal's health.
     EnemyHealth enemyHealth;        // Reference to this enemy's health.
@@ -44,7 +46,7 @@ public class EnemyMovement : MonoBehaviour
                 transform.position = newPosition;
             }
         }
-        else SetMoveTime(100f, 2f);
+        else SetMoveTime(100f, "normal"); //Stop moving when this enemy or the goal is dead
     }
 
     public IEnumerator MoveToPosition(Transform transform, Vector3 position, float moveTime)
@@ -59,11 +61,16 @@ public class EnemyMovement : MonoBehaviour
         }
     }
 
-    public void SetMoveTime(float multiplier, float duration)
+    public void SetMoveTime(float duration, string slowType = "normal")
     {
         if (!isSlowed)
         {
-            currentMoveTime = currentMoveTime * multiplier;
+            if(slowType == "rain") 
+            {
+                currentMoveTime = currentMoveTime * rainMultiplier; //Different rain slow multiplier for different zombies
+            }
+            else if(slowType == "wind") currentMoveTime = currentMoveTime * rainMultiplier;
+            else if(slowType == "normal") currentMoveTime *= 100f;
             isSlowed = true;
             StartCoroutine(ResetMoveTime(duration));
         }

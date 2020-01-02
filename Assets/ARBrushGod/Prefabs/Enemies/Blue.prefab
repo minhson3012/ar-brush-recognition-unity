@@ -629,6 +629,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationTime: 1
   moveTime: 10
+  slowMultiplier: 1
 --- !u!114 &3858471766873324738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -644,6 +645,8 @@ MonoBehaviour:
   startingHealth: 100
   currentHealth: 0
   attackDamage: 10
+  fireMultiplier: 0.5
+  thunderMultiplier: 1
   healthBar: {fileID: 2077569867848292768}
   sinkSpeed: 0.1
 --- !u!114 &-7054708411333929093

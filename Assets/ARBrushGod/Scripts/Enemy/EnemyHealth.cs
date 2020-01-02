@@ -6,6 +6,8 @@ public class EnemyHealth : MonoBehaviour
     public float startingHealth;
     public float currentHealth;
     public int attackDamage;
+    public float fireMultiplier = 1f;
+    public float thunderMultiplier = 1f;
     public Image healthBar;
     public float sinkSpeed = 0.1f;
     bool isDead = false;
@@ -29,9 +31,11 @@ public class EnemyHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamage(float amount)
+    public void TakeDamage(float amount, string damageType = "normal")
     {
         if (isDead) return;
+        if (damageType == "fire") amount *= fireMultiplier;
+        else if (damageType == "thunder") amount *= thunderMultiplier;
         currentHealth -= amount;
         healthBar.fillAmount = currentHealth / startingHealth;
         if (currentHealth <= 0)
