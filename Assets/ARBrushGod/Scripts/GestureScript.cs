@@ -78,6 +78,7 @@ namespace BrushGestures
                 // }
 
                 //Recognize drawing
+                if (points.Count > 0) points.RemoveAt(points.Count - 1);
                 Gesture candidate = new Gesture(points.ToArray());
                 gestureResult = QPointCloudRecognizer.Classify(candidate, trainingSet.ToArray());
                 Debug.Log(gestureResult);
@@ -138,11 +139,11 @@ namespace BrushGestures
         //Render drawings
         private void RenderLines()
         {
-
             //Handle inputs
             if (Input.touchCount > 0 || Input.GetMouseButton(0))
             {
                 virtualKeyPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
+                Debug.Log(virtualKeyPosition);
             }
 
             if (Input.GetMouseButtonDown(0))
@@ -163,11 +164,13 @@ namespace BrushGestures
 
             if (Input.GetMouseButton(0))
             {
-                points.Add(new Point(virtualKeyPosition.x, -virtualKeyPosition.y, strokeId));
+                //Don't add point if it's identical to the previous one
+                if (points.Count == 0 || (virtualKeyPosition.x != points[points.Count - 1].X && virtualKeyPosition.y != -points[points.Count - 1].Y))
+                    points.Add(new Point(virtualKeyPosition.x, -virtualKeyPosition.y, strokeId));
                 pointsList.Add(new Vector3(virtualKeyPosition.x, virtualKeyPosition.y, 0.15f));
                 currentGestureLineRenderer.positionCount = ++vertexCount;
+                Debug.Log(points.Count);
             }
-
         }
 
         //Update drawn lines positions
