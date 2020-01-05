@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     int totalNumOfEnemies;
     GameObject goal;
     GoalHealth goalHealth;
+    bool waveStarted;
     void Awake()
     {
         //Find anchor
@@ -49,12 +50,13 @@ public class GameManager : MonoBehaviour
     {
         int currentNumOfEnemies = manager.GetCurrentNumOfEnemies();
         if (goalHealth.currentHealth <= 0) infoText.text = "GAME OVER"; //Game over
-        else if (currentNumOfEnemies == 0)
+        else if (currentNumOfEnemies == 0 && waveStarted)
         {
             if (manager.currentWave <= manager.GetNumOfWaves() - 1)
             {
                 infoText.text = "WAVE COMPLETE!\nGET READY FOR THE NEXT WAVE"; //Wave ended
                 StartCoroutine(DisplayWaveText(10));
+                waveStarted = false;
             }
             else infoText.text = "YOU WIN!"; //Game ended
         }
@@ -73,14 +75,13 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(2);
 
         infoText.text = "GET READY";
-
-        yield return new WaitForSeconds(1);
         StartCoroutine(DisplayWaveText(3));
     }
 
     IEnumerator DisplayWaveText(float time)
     {
         // float time = 3f;
+        yield return new WaitForSeconds(3);
         while (time > 0f)
         {
             infoText.text = time.ToString();
@@ -88,6 +89,9 @@ public class GameManager : MonoBehaviour
             time--;
         }
         infoText.text = "WAVE " + (manager.currentWave + 1) + ": " + totalNumOfEnemies + "/" + totalNumOfEnemies;
+
+        yield return new WaitForSeconds(time);
         manager.gameStarted = true;
+        waveStarted = true;
     }
 }

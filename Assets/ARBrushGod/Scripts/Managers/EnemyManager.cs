@@ -42,7 +42,8 @@ public class EnemyManager : MonoBehaviour
             InvokeRepeating("Spawn", 0, spawnTime);
             gameStarted = false;
         }
-    }
+        if(currentNumOfEnemies == 0) NextWave();
+    } 
 
     void Spawn()
     {
@@ -73,11 +74,6 @@ public class EnemyManager : MonoBehaviour
             gameObject.transform.parent = playZone.transform;
             gameObject.transform.localScale *= 0.6f;
             enemyToSpawn.enemyCount--;
-        }
-        else if (enemyCount == 0)
-        {
-            //Switch to next wave
-            NextWave();
         }
     }
 
