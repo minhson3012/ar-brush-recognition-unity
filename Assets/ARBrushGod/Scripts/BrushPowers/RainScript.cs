@@ -8,6 +8,7 @@ namespace BrushGestures
         public GameObject Rain;
         public float radius = 0.5f;
         public float inkCost = 5f;
+        public float duration = 3f;
         GameObject power;
         BrushPowers brushPowers;
         GameObject circle;
@@ -42,11 +43,15 @@ namespace BrushGestures
             if (isActivated)
             {
                 timer += Time.deltaTime;
-                if (timer < 3f)
+                if (timer < duration)
                 {
                     CheckForHit();
                 }
-                else isActivated = false;
+                else 
+                {
+                    isActivated = false;
+                    timer = 0f;
+                }
             }
         }
 
@@ -60,7 +65,7 @@ namespace BrushGestures
                 {
                     //Heavily slow every enemy for 5 seconds
                     EnemyMovement em = e.GetComponent<EnemyMovement>();
-                    em.SetMoveTime(3f, "rain");
+                    em.SetMoveTime(duration, "rain");
                 }
             }
         }
