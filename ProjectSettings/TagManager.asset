@@ -21,6 +21,7 @@ TagManager:
   - ARCore Device
   - Circle
   - EnemyManager
+  - Tree
   layers:
   - Default
   - TransparentFX
