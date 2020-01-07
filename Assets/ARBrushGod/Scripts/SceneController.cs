@@ -123,6 +123,9 @@
                                     //Disable Point Cloud and Plane Generator
                                     GameObject.FindGameObjectWithTag("PointCloud").SetActive(false);
                                     GameObject.FindGameObjectWithTag("PlaneGenerator").SetActive(false);
+
+                                    var session = GameObject.FindGameObjectWithTag("ARCore Device").GetComponent<ARCoreSession>();
+                                    session.SessionConfig.PlaneFindingMode = DetectedPlaneFindingMode.Disabled;
                                 }
                             }
                         }
