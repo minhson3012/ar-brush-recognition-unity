@@ -42,12 +42,7 @@ public class EnemyManager : MonoBehaviour
             InvokeRepeating("Spawn", 0, spawnTime);
             gameStarted = false;
         }
-        if(currentNumOfEnemies == 0) 
-        {
-            NextWave();
-            CancelInvoke();
-        }
-    } 
+    }
 
     void Spawn()
     {
@@ -89,6 +84,7 @@ public class EnemyManager : MonoBehaviour
     public void EnemyDead()
     {
         currentNumOfEnemies--;
+        return;
     }
 
     public int GetCurrentNumOfEnemies()
@@ -103,10 +99,10 @@ public class EnemyManager : MonoBehaviour
 
     public void NextWave()
     {
-        if (currentWave != (wave.Length - 1))
-        {
-            currentWave++;
+        CancelInvoke();
+        currentWave++;
+        if (currentWave <= (wave.Length - 1))
             currentNumOfEnemies = GetTotalNumOfEnemies(currentWave);
-        }
+        return;
     }
 }

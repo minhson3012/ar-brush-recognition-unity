@@ -42,29 +42,35 @@ public class GameManager : MonoBehaviour
         goalHealth = goal.GetComponent<GoalHealth>();
 
         StartCoroutine(DisplayStartText());
-        previousNumOfEnemies = manager.GetTotalNumOfEnemies(manager.currentWave);
-        totalNumOfEnemies = previousNumOfEnemies;
+        totalNumOfEnemies = manager.GetTotalNumOfEnemies(manager.currentWave);
     }
 
     void Update()
     {
-        int currentNumOfEnemies = manager.GetCurrentNumOfEnemies();
-        if (goalHealth.currentHealth <= 0) infoText.text = "GAME OVER"; //Game over
-        else if (currentNumOfEnemies == 0 && waveStarted)
+        if (manager.currentWave > manager.GetNumOfWaves() - 1)
         {
-            if (manager.currentWave <= manager.GetNumOfWaves() - 1)
-            {
-                infoText.text = "WAVE COMPLETE!"; //Wave ended
-                StartCoroutine(DisplayWaveText(10));
-                waveStarted = false;
-            }
-            else infoText.text = "YOU WIN!"; //Game ended
+            infoText.text = "YOU WIN!"; //Game ended
         }
-        else if (currentNumOfEnemies != previousNumOfEnemies || waveStarted)
+        else if (manager.currentWave >= 0)
         {
-            //Game is still going
-            infoText.text = "WAVE " + (manager.currentWave + 1) + ": " + currentNumOfEnemies + "/" + totalNumOfEnemies;
-            previousNumOfEnemies = currentNumOfEnemies;
+            int currentNumOfEnemies = manager.GetCurrentNumOfEnemies();
+            if (goalHealth.currentHealth <= 0) infoText.text = "GAME OVER"; //Game over
+            else if (currentNumOfEnemies == 0 && waveStarted)
+            {
+                if (manager.currentWave <= manager.GetNumOfWaves() - 1)
+                {
+                    infoText.text = "WAVE COMPLETE!"; //Wave ended
+                    StartCoroutine(DisplayWaveText(5));
+                    waveStarted = false;
+                    manager.NextWave();
+                }
+            }
+            else
+            {
+                if (waveStarted)
+                    //Game is still going
+                    infoText.text = "WAVE " + (manager.currentWave + 1) + ": " + currentNumOfEnemies + "/" + totalNumOfEnemies;
+            }
         }
     }
 
@@ -82,13 +88,14 @@ public class GameManager : MonoBehaviour
     {
         // float time = 3f;
         yield return new WaitForSeconds(3);
-        while (time > 0f)
+        while (time > 0f && (manager.currentWave <= manager.GetNumOfWaves() - 1))
         {
             infoText.text = time.ToString();
             yield return new WaitForSeconds(1);
             time--;
         }
         // infoText.text = "WAVE " + (manager.currentWave + 1) + ": " + totalNumOfEnemies + "/" + totalNumOfEnemies;
+        totalNumOfEnemies = manager.GetTotalNumOfEnemies(manager.currentWave);
         manager.gameStarted = true;
         waveStarted = true;
         yield return 0;
