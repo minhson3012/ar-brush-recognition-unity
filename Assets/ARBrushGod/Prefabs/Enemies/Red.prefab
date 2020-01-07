@@ -892,7 +892,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6752307601789515829}
   - component: {fileID: 3692670480331953487}
-  - component: {fileID: -6494735765919001941}
   - component: {fileID: 7275718806799341331}
   - component: {fileID: 5364482826471325757}
   - component: {fileID: 8900315532192238206}
@@ -941,22 +940,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!54 &-6494735765919001941
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7777252725724776998}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: Infinity
-  m_AngularDrag: Infinity
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
 --- !u!114 &7275718806799341331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -971,6 +954,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationTime: 1
   moveTime: 10
+  rainMultiplier: 5
+  windMultiplier: 10
+  isNearTree: 0
 --- !u!114 &5364482826471325757
 MonoBehaviour:
   m_ObjectHideFlags: 0
