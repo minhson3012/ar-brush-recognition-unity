@@ -143,7 +143,6 @@ namespace BrushGestures
             if (Input.touchCount > 0 || Input.GetMouseButton(0))
             {
                 virtualKeyPosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
-                Debug.Log(virtualKeyPosition);
             }
 
             if (Input.GetMouseButtonDown(0))
@@ -169,7 +168,6 @@ namespace BrushGestures
                     points.Add(new Point(virtualKeyPosition.x, -virtualKeyPosition.y, strokeId));
                 pointsList.Add(new Vector3(virtualKeyPosition.x, virtualKeyPosition.y, 0.15f));
                 currentGestureLineRenderer.positionCount = ++vertexCount;
-                Debug.Log(points.Count);
             }
         }
 
