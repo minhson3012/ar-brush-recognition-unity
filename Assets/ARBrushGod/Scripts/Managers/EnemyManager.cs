@@ -42,7 +42,11 @@ public class EnemyManager : MonoBehaviour
             InvokeRepeating("Spawn", 0, spawnTime);
             gameStarted = false;
         }
-        if(currentNumOfEnemies == 0) NextWave();
+        if(currentNumOfEnemies == 0) 
+        {
+            NextWave();
+            CancelInvoke();
+        }
     } 
 
     void Spawn()
