@@ -31,7 +31,7 @@ namespace BrushGestures
             enemyHealth = GetComponent<EnemyHealth>();
             enemyAttack = GetComponent<EnemyAttack>();
             currentMoveTime = moveTime;
-            StartCoroutine(MoveToPosition(transform, goal.position, currentMoveTime));
+            StartCoroutine(MoveToPosition(currentMoveTime));
             isSlowed = false;
             isNearTree = false;
         }
@@ -41,7 +41,6 @@ namespace BrushGestures
         {
             if (enemyHealth.currentHealth > 0 && goalHealth.currentHealth > 0)
             {
-
                 GameObject treeObject;
                 if ((treeObject = GameObject.FindGameObjectWithTag("Tree")) != null)
                     direction = (treeObject.transform.position - transform.position).normalized;
@@ -59,13 +58,15 @@ namespace BrushGestures
             else SetMoveTime(100f); //Stop moving when this enemy or the goal is dead
         }
 
-        public IEnumerator MoveToPosition(Transform transform, Vector3 position, float moveTime)
+        public IEnumerator MoveToPosition(float moveTime)
         {
-            var currentPos = transform.position;
+            
             t = 0f;
             while (t < 1 && !enemyAttack.goalInRange)
             {
                 yield return new WaitUntil(() => !isNearTree); // Don't move until tree is gone
+                var currentPos = transform.position;
+                var position = goal.position;
                 t += Time.deltaTime / currentMoveTime;
                 transform.position = Vector3.Lerp(currentPos, position, t);
                 yield return null;
