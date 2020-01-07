@@ -44,16 +44,13 @@ namespace BrushGestures
         {
             var explosion = Instantiate(explosionEffect, power.transform.position, power.transform.rotation);
 
-            Collider[] colliders = Physics.OverlapSphere(power.transform.position, radius);
-
-            foreach (Collider nearbyObject in colliders)
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            foreach (GameObject e in enemies)
             {
-                Rigidbody rb = nearbyObject.GetComponent<Rigidbody>();
-                if (nearbyObject.tag.Equals("Enemy"))
+                float distance = Vector3.Distance(power.transform.position, e.transform.position);
+                if (distance <= radius)
                 {
-                    rb.AddExplosionForce(force, power.transform.position, radius);
-                    // dummyScript.Die();
-                    nearbyObject.GetComponent<EnemyHealth>().TakeDamage(200);
+                    e.GetComponent<EnemyHealth>().TakeDamage(200f);
                 }
             }
             Destroy(explosion, 2);
