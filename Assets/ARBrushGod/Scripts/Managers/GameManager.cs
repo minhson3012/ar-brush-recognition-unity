@@ -54,13 +54,13 @@ public class GameManager : MonoBehaviour
         {
             if (manager.currentWave <= manager.GetNumOfWaves() - 1)
             {
-                infoText.text = "WAVE COMPLETE!\nGET READY FOR THE NEXT WAVE"; //Wave ended
+                infoText.text = "WAVE COMPLETE!"; //Wave ended
                 StartCoroutine(DisplayWaveText(10));
                 waveStarted = false;
             }
             else infoText.text = "YOU WIN!"; //Game ended
         }
-        else if (currentNumOfEnemies != previousNumOfEnemies)
+        else if (currentNumOfEnemies != previousNumOfEnemies || waveStarted)
         {
             //Game is still going
             infoText.text = "WAVE " + (manager.currentWave + 1) + ": " + currentNumOfEnemies + "/" + totalNumOfEnemies;
@@ -88,10 +88,9 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(1);
             time--;
         }
-        infoText.text = "WAVE " + (manager.currentWave + 1) + ": " + totalNumOfEnemies + "/" + totalNumOfEnemies;
-
-        yield return new WaitForSeconds(time);
+        // infoText.text = "WAVE " + (manager.currentWave + 1) + ": " + totalNumOfEnemies + "/" + totalNumOfEnemies;
         manager.gameStarted = true;
         waveStarted = true;
+        yield return 0;
     }
 }
