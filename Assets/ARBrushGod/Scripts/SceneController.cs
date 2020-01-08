@@ -126,6 +126,7 @@
 
                                     var session = GameObject.FindGameObjectWithTag("ARCore Device").GetComponent<ARCoreSession>();
                                     session.SessionConfig.PlaneFindingMode = DetectedPlaneFindingMode.Disabled;
+                                    session.OnEnable();
                                 }
                             }
                         }

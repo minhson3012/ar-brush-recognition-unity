@@ -31,7 +31,8 @@ namespace BrushGestures
             enemyHealth = GetComponent<EnemyHealth>();
             enemyAttack = GetComponent<EnemyAttack>();
             currentMoveTime = moveTime;
-            StartCoroutine(MoveToPosition(transform, goal.position, currentMoveTime));
+            // StartCoroutine(MoveToPosition(transform, goal.position, currentMoveTime));
+            StartCoroutine(MoveToPosition(currentMoveTime));
             isSlowed = false;
             isNearTree = false;
         }
@@ -48,23 +49,23 @@ namespace BrushGestures
                     direction = (goal.position - transform.position).normalized;
                 lookRotation = Quaternion.LookRotation(direction);
                 transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * rotationTime);
-
-                if (transform.position.y != goal.position.y)
-                {
-                    Vector3 newPosition = new Vector3(transform.position.x, goal.position.y, transform.position.z);
-                    transform.position = newPosition;
-                }
             }
             else SetMoveTime(100f); //Stop moving when this enemy or the goal is dead
         }
 
-        public IEnumerator MoveToPosition(Transform transform, Vector3 position, float moveTime)
+        public IEnumerator MoveToPosition(float moveTime)
         {
             t = 0f;
             var currentPos = transform.position;
             while (t < 1 && !enemyAttack.goalInRange)
             {
                 yield return new WaitUntil(() => !isNearTree); // Don't move until tree is gone
+                var position = goal.position;
+                if (transform.position.y != position.y)
+                {
+                    Vector3 newPosition = new Vector3(currentPos.x, transform.position.y, currentPos.z);
+                    transform.position = newPosition;
+                }
                 t += Time.deltaTime / currentMoveTime;
                 transform.position = Vector3.Lerp(currentPos, position, t);
                 yield return null;
