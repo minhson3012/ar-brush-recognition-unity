@@ -146,7 +146,8 @@ namespace BrushGestures
                 else
                 {
                     circleRadius.transform.parent = GameObject.FindGameObjectWithTag("Anchor").transform;
-                    circleRadius.transform.position = new Vector3(hit.Pose.position.x, hit.Pose.position.y, hit.Pose.position.z);
+                    var goalObject = GameObject.FindGameObjectWithTag("Goal");
+                    circleRadius.transform.position = new Vector3(hit.Pose.position.x, goalObject.transform.position.y, hit.Pose.position.z);
                     circleRadius.transform.rotation = hit.Pose.rotation;
                     circleRadius.DrawCircle(currentRadius, 0.01f, lineColor);
                 }
