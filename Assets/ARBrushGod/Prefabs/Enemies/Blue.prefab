@@ -555,6 +555,7 @@ GameObject:
   - component: {fileID: -7054708411333929093}
   - component: {fileID: 1916464199935087410}
   - component: {fileID: 6958812516580944395}
+  - component: {fileID: -4073493328602748724}
   m_Layer: 2
   m_Name: Blue
   m_TagString: Enemy
@@ -676,6 +677,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: -0.034711957, y: 0.8000001, z: 0}
+--- !u!54 &-4073493328602748724
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6038273353674341714}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: Infinity
+  m_AngularDrag: Infinity
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 3
 --- !u!1 &6051228693851565433
 GameObject:
   m_ObjectHideFlags: 0

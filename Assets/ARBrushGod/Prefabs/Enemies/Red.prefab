@@ -897,6 +897,7 @@ GameObject:
   - component: {fileID: 8900315532192238206}
   - component: {fileID: -8536116373739613323}
   - component: {fileID: -2697104036687891954}
+  - component: {fileID: 2627208147026304743}
   m_Layer: 2
   m_Name: Red
   m_TagString: Enemy
@@ -969,7 +970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e4c64a06c3d1c42a77c56bc69555ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 0
+  startingHealth: 100
   currentHealth: 0
   attackDamage: 0
   fireMultiplier: 0.3
@@ -1018,6 +1019,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: -0.034711957, y: 0.8000001, z: 0}
+--- !u!54 &2627208147026304743
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7777252725724776998}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: Infinity
+  m_AngularDrag: Infinity
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 3
 --- !u!1 &8060160464228702961
 GameObject:
   m_ObjectHideFlags: 0

@@ -325,6 +325,7 @@ GameObject:
   - component: {fileID: 1977492801187616956}
   - component: {fileID: 9025630927980577339}
   - component: {fileID: 108458185062681709}
+  - component: {fileID: 7310127385697943820}
   m_Layer: 2
   m_Name: Yellow
   m_TagString: Enemy
@@ -397,7 +398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12e4c64a06c3d1c42a77c56bc69555ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 0
+  startingHealth: 100
   currentHealth: 0
   attackDamage: 0
   fireMultiplier: 1
@@ -446,6 +447,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: -0.034711957, y: 0.8000001, z: 0}
+--- !u!54 &7310127385697943820
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2378453651032928323}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: Infinity
+  m_AngularDrag: Infinity
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 3
 --- !u!1 &2393662165406392424
 GameObject:
   m_ObjectHideFlags: 0

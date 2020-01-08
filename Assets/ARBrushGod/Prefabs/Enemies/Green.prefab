@@ -387,6 +387,7 @@ GameObject:
   - component: {fileID: -7183442577686991489}
   - component: {fileID: 3403945354429579750}
   - component: {fileID: 1092120933450656334}
+  - component: {fileID: 4893158657690928528}
   m_Layer: 2
   m_Name: Green
   m_TagString: Enemy
@@ -508,6 +509,22 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: -0.034711957, y: 0.8000001, z: 0}
+--- !u!54 &4893158657690928528
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2804530131606057310}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: Infinity
+  m_AngularDrag: Infinity
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 3
 --- !u!1 &2946892156780608150
 GameObject:
   m_ObjectHideFlags: 0
